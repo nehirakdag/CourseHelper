@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import re
+import bcrypt
 
 from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
 from flask_bootstrap import Bootstrap
@@ -26,9 +27,6 @@ def before_request():
 
 def connect_db():
     # Connect to the database
-    #rv = sqlite3.connect(app.config['DATABASE'])
-    #rv.row_factory = sqlite3.Row
-    #return rv
     return sqlite3.connect(app.config['DATABASE'])
 
 def get_db():
@@ -91,14 +89,39 @@ def checkForCorrectRegistration(username, password, passwordConf, email):
         error = "Error! Password can not be blank!"
     elif not email.strip():
         error = "Error! Email address can not be blank!"
+    elif len(username) > 50:
+        error = "Error! Username can not contain more than 50 characters"
     # Check if the two password entries match
     elif password != passwordConf:
         error = "Error! Password must match Password Confirmation"
+    elif len(password) > 50:
+        error = "Error! Password can not contain more than 50 characters"
     # Check if a valid email address was entered
     elif not EMAIL_REGEX.match(request.form['email']):
         error = "Error! Please input a valid email address"
 
     return error
+
+def checkForCorrectLogin(username, password, currentError):
+    error = currentError
+
+    # Check if any of the fields were blank
+    if not username.strip():
+        error = "Error! Username can not be blank!"
+    elif not password.strip():
+        error = "Error! Password can not be blank!"
+    elif len(username) > 50:
+        error = "Error! Username can not contain more than 50 characters"
+    elif len(password) > 50:
+        error = "Error! Password can not contain more than 50 characters"
+
+    return error
+
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
 
 @app.route('/add', methods=['GET', 'POST'])
 def register_to_db():
@@ -121,6 +144,7 @@ def register_to_db():
     #     error = "Error! Please input a valid email address"
     #     print error
     #     return render_template("register.html", error=error)
+    
     userName = str(request.form['user'])
     passwd = str(request.form['pass'])
     passwdConf = str(request.form['pwConf'])
@@ -131,9 +155,12 @@ def register_to_db():
         print error
         return render_template("register.html", error=error)
 
+    #hashedPassword = bcrypt.hashpw(passwd, bcrypt.gensalt())
+    checkPass = bytes(passwd).encode('utf-8')
+    hashedPassword = str(bcrypt.hashpw(checkPass, bcrypt.gensalt())).encode('utf-8')
     #Check if entered username was unique
     try:
-        db.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [userName , email, passwd])
+        db.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [userName , email, hashedPassword])
         db.commit()
     #if not, redirect user to registration page
     except sqlite3.IntegrityError:
@@ -143,23 +170,46 @@ def register_to_db():
         return render_template("register.html", error=error)
 
     #print ('New entry was successfully posted')
-    return render_template("loggedin_home.html", username=userName)
+    return render_template("index.html")
 
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     error = None
-#     if request.method == 'POST':
-#         if request.form['user'] != app.config['USERNAME']:
-#             error = 'Invalid username'
-#         elif request.form['pass'] != app.config['PASSWORD']:
-#             error = 'Invalid password'
-#         elif request.form['pass'] != request.form['pwConf']:
-#             error = 'Password and confirmation must match'
-#         else:
-#             session['logged_in'] = True
-#             flash('You were logged in')
-#             return redirect(url_for('show_entries'))
-#     return render_template('login.html', error=error)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+
+    db = get_db()
+    db.row_factory = sqlite3.Row
+
+    userName = str(request.form['user'])
+    passwd = str(request.form['pass'])
+
+    userInfo = query_db('SELECT * FROM users WHERE username = ?', (userName, ) , one=True)
+
+    if userInfo is None:
+        error = "Error! Username does not exist"
+    else:
+        checkPass = bytes(passwd).encode('utf-8')
+        hashedPassword = bytes(userInfo['password']).encode('utf-8')
+        if bcrypt.hashpw(checkPass, hashedPassword) != hashedPassword:
+            error = "Error! Wrong password!"
+
+    error = checkForCorrectLogin(userName, passwd, error)
+    if not error is None:
+        print error
+        return render_template("index.html", error=error)
+    # if request.method == 'POST':
+    #     if request.form['user'] != app.config['USERNAME']:
+    #         error = 'Invalid username'
+    #     elif request.form['pass'] != app.config['PASSWORD']:
+    #         error = 'Invalid password'
+    #     elif request.form['pass'] != request.form['pwConf']:
+    #         error = 'Password and confirmation must match'
+    #     else:
+    #         session['logged_in'] = True
+    #         flash('You were logged in')
+    #         return redirect(url_for('show_entries'))
+
+
+    return render_template("loggedin_home.html", username=str(request.form['user']))
 
 # @app.route('/logout')
 # def logout():
