@@ -19,8 +19,8 @@ app.config.update(dict(
 
 @app.before_request
 def before_request():
-        g.db = connect_db()
-        print 'initialized DB'
+    g.db = connect_db()
+    print 'initialized DB'
 
 def connect_db():
 	# Connect to the database
@@ -56,11 +56,11 @@ if not(os.path.exists(app.config['DATABASE'])):
 
 # Functions marked with teardown_appcontext are called every time the app context tears down
 # A teardown happens either when after everything went well (app closes, error = None) or an exception occurred
-@app.teardown_appcontext
-def close_db(error):
-	# Closes the database again at the end of the request
-	if hasattr(g, 'sqlite_db'):
-		g.sqlite_db.close()
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        db.close()
 	print ("db closed")
 
 @app.route('/')
@@ -72,45 +72,50 @@ def hello_world():
 def registration():
 	return render_template("register.html")
 
-@app.route('/profiles')
-def show_entries():
-	db = get_db()
-	cur = db.execute('select username, password from entries order by id desc')
-	entries = cur.fetchall()
-	return render_template('profiles.html', entries=entries)
+# @app.route('/profiles')
+# def show_entries():
+# 	db = get_db()
+# 	cur = db.execute('select username, password from entries order by id desc')
+# 	entries = cur.fetchall()
+# 	return render_template('profiles.html', entries=entries)
 
 @app.route('/add', methods=['GET', 'POST'])
-def add_entry():
+def register_to_db():
     if session.get('logged_in'):
     	flash('aborting!')
         abort(401)
-    #db = get_db()
+    db = get_db()
     print (request.form['pass'])
-    g.db.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [request.form['user'] , request.form['email'], request.form['pass']])
-    g.db.commit()
+
+    #Check if entered username was unique
+    try:
+        db.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [request.form['user'] , request.form['email'], request.form['pass']])
+        db.commit()
+    except sqlite3.IntegrityError:
+        db.rollback()
+        print "USERNAME MUST BE UNIQUE"
+        return redirect(url_for('registration'))
     #print ('New entry was successfully posted')
-    return redirect(url_for('/'))
+    return redirect(url_for('hello_world'))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['user'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['pass'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        elif request.form['pass'] != request.form['pwConf']:
-        	error = 'Password and confirmation must match'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         if request.form['user'] != app.config['USERNAME']:
+#             error = 'Invalid username'
+#         elif request.form['pass'] != app.config['PASSWORD']:
+#             error = 'Invalid password'
+#         elif request.form['pass'] != request.form['pwConf']:
+#         	error = 'Password and confirmation must match'
+#         else:
+#             session['logged_in'] = True
+#             flash('You were logged in')
+#             return redirect(url_for('show_entries'))
+#     return render_template('login.html', error=error)
 
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
-
-app.run(debug=True)
+# @app.route('/logout')
+# def logout():
+#     session.pop('logged_in', None)
+#     flash('You were logged out')
+#     return redirect(url_for('show_entries'))
