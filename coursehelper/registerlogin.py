@@ -49,8 +49,6 @@ def checkForCorrectLogin(username, password, currentError):
     return error
 
 def registerAttempt(request):
-    db = get_db()
-
     userName = str(request.form['user'])
     passwd = str(request.form['pass'])
     passwdConf = str(request.form['pwConf'])
@@ -66,6 +64,7 @@ def registerAttempt(request):
     #hashedPassword = bcrypt.hashpw(passwd, bcrypt.gensalt())
     checkPass = bytes(passwd).encode('utf-8')
     hashedPassword = str(bcrypt.hashpw(checkPass, bcrypt.gensalt())).encode('utf-8')
+    db = get_db()
     
     #Check if entered username was unique
     try:

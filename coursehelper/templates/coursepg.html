@@ -17,7 +17,7 @@
             <a class="navbar-brand" href="#">CourseHelper</a>
         </div></div>
       <ul class="nav navbar-nav">
-        <li class="active"> <a href="#"/>COMP 307 <span class="sr-only">(current)</span></a></li>
+        <li class="active"> <a href="#"/> {{ courseid }} <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Course Feed</a></li>
         <li><a href="#">Reviews</a></li>
         <li><a href="#">Resources</a></li>
@@ -27,17 +27,18 @@
     <div class="body-container">
       <div class="container-fluid-cr">
         <div class="row-fluid">
-            <h2> {{coursetitle}} </h2>
+            <h2> {{ coursetitle }} </h2>
             <h4> {{ coursedesc }} </h4>
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Course Feed</u></h3>
                   <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><small> Add a post </small></h2>
                   <div class="panel-transp">
-                  <form id="reg" method="post" class="form-horizontal">
+                  <form id="reg" method="post" class="form-horizontal" action="/addpost">
 
                     <div class="form-group">
                       <input type="text" name="post" class="form-control input-lg" id="inputlg" class="form-control">
+                      <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
                     <div class="form-group">
                       <input type="submit" class="btn btn-transp" value="Submit">
@@ -48,7 +49,7 @@
                 {% for post in posts %}
                 <div class="panel-small">
                   <div class="panel-body">
-                    <h4>Posted by <a href="#">{{ post.user }} </a><small>{{ post.timestamp }}</small></h4>
+                    <h4>Posted by <a href="#">{{ post.userid }} </a><small>{{ post.tstamp }}</small></h4>
                     <h4> {{ post.post}} </h4>
                   </div>
                 </div>
