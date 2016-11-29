@@ -16,11 +16,9 @@ app.config.update(dict(
 ))
 
 import coursehelper.views
-#app.config.from_envvar('COURSEHELPER_SETTINGS', silent=True)
+import coursehelper.coursesToDB
 
-#@app.cli.command('initdb')
-#def initdb_command():
-    # Initializes the database
-#   init_db()
-#   print 'Initialized the database according to the schema'
+# with app.app_context():
+#     coursesToDB.putCoursesToDB()
+#app.config.from_envvar('COURSEHELPER_SETTINGS', silent=True)
 
