@@ -127,3 +127,15 @@ def logout():
     print "Logout successful"
     return redirect(url_for('index'))
 
+@app.route('/courses/<courseid>')
+def coursepage(courseid):
+    posts = []
+    post = {}
+    post['user'] = 'xxx'
+    post['post'] = "Does anyone know what textbook chapters we need for the midterm?"
+    post['timestamp'] = datetime.date.today()
+    posts.append(post)
+    return render_template("coursepg.html", courseid=courseid, coursetitle="Principles of Web Development",
+        coursedesc='''Computer Science (Sci) : The course discusses the major principles, algorithms,
+        languages and technologies that underlie web development. Students receive practical 
+        hands-on experience through a project.''', posts=posts)
