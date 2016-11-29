@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>IDK</title>
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#">
+            <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
+            </a>-->
+            <div class="navbar-left">
+            <a class="navbar-brand" href="#">CourseHelper</a>
+        </div></div>
+      <ul class="nav navbar-nav">
+        <li class="active"> <a href="#"/>COMP 307 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Course Feed</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Resources</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="body-container">
+      <div class="container-fluid-cr">
+        <div class="row-fluid">
+            <h2> {{ courseid }} - {{coursetitle}} </h2>
+            <h4> {{ coursedesc }} </h4>
+            <div class="panel">
+              <div class="panel-body">
+                <h3><u>Course Feed</u></h3>
+                  <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><small> Add a post </small></h2>
+                  <div class="panel-transp">
+                  <form id="reg" method="post" class="form-horizontal">
+
+                    <div class="form-group">
+                      <input type="text" name="post" class="form-control input-lg" id="inputlg" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-transp" value="Submit">
+                    </div>
+
+                    </form>
+                    </div>
+                {% for post in posts %}
+                <div class="panel-small">
+                  <div class="panel-body">
+                    <h4>Posted by <a href="#">{{ post.user }} </a><small>{{ post.timestamp }}</small></h4>
+                    <h4> {{ post.post}} </h4>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+

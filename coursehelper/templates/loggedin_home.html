@@ -7,11 +7,18 @@
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse">
       <div class="container">
-        <div class="navbar-header"><a href="/"><img src="{{ url_for('static',filename='img/placeholder.png') }}" alt="Project Fate Generator" class="img-responsive"></a></div>
-      </div>
-    </nav>
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#">
+            <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
+            </a>-->
+            <a class="navbar-brand" href="#">CourseHelper</a>
+        </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li></div>
+        </ul></div></nav>
     <div class="body-container">
       <div class="container-fluid">
         <div class="row-fluid">
@@ -31,11 +38,6 @@
                 {% endif %}
                 </ul>
                 </div>
-                <form id="login" method="get" class="form-horizontal" action="/logout">
-                  <div class="form-group">
-                    <input type="submit" value="Logout">
-                  </div>
-                </form>
               </div>
             </div>
           </div>

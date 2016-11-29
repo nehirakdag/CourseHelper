@@ -14,8 +14,20 @@ body {
   background-image: url(img/background1.jpg); ;
   -webkit-background-size: cover;
   background-size: cover;
-  background-color: rgb(0,0,0,6);
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-color: rgb(0,0,0,0.6);
+  background-position: right-top;
+  background-attachment: fixed;
+  background-attachment: fixed;
+
 }
+
+#overlay {
+  background-color: rgb(0,0,0,0.6);
+  opacity: 0.7;
+}
+
 article,
 aside,
 details,
@@ -26,7 +38,10 @@ header,
 hgroup,
 main,
 menu,
-nav,
+nav {
+  background: transparent;
+}
+
 section,
 summary {
   display: block;
@@ -73,6 +88,7 @@ mark {
 }
 small {
   font-size: 80%;
+  color: white;
 }
 sub,
 sup {
@@ -1218,7 +1234,7 @@ h6 .small,
 .h6 .small {
   font-weight: normal;
   line-height: 1;
-  color: #777;
+  color: #c8c8c8;
 }
 h1,
 .h1,
@@ -1599,6 +1615,17 @@ pre code {
   display:table;
   width: 40%;
   padding: 0;
+  background-color: transparent;
+}
+.container-fluid-cr{
+  margin-top: 20px;
+  margin-left: 50px;
+  height:90%;
+  display:table;
+  width: 95%;
+  padding: 20;
+  background-color: transparent;
+  color: white;
 }
  
 .row-fluid {height: 100%; display:table-cell; vertical-align: middle;}
@@ -1629,6 +1656,7 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+
 .row {
   margin-right: -15px;
   margin-left: -15px;
@@ -2576,6 +2604,7 @@ output {
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
+  opacity: 0.8;
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -2651,6 +2680,7 @@ input[type="search"] {
 }
 .form-group {
   margin-bottom: 15px;
+  color: white;
 }
 .radio,
 .checkbox {
@@ -2768,6 +2798,8 @@ select[multiple].input-sm {
   font-size: 18px;
   line-height: 1.3333333;
   border-radius: 6px;
+  width: 30%
+
 }
 select.input-lg {
   height: 46px;
@@ -3039,8 +3071,8 @@ select[multiple].input-lg {
       -ms-user-select: none;
           user-select: none;
   background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  border: 2px solid transparent;
+  border-radius: 0px;
 }
 .btn:focus,
 .btn:active:focus,
@@ -3081,6 +3113,12 @@ fieldset[disabled] a.btn {
   color: #333;
   background-color: #fff;
   border-color: #ccc;
+}
+.btn-transp {
+  color: white;
+  background-color: transparent;
+  border-color: white;
+  border-radius: 0px;
 }
 .btn-default:focus,
 .btn-default.focus {
@@ -3457,7 +3495,7 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
@@ -5470,14 +5508,32 @@ button.list-group-item-danger.active:focus {
 }
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+.panel-transp {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  background-color: transparent;
+  border: 3px solid transparent;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+.panel-small {
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 0px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 .panel-body {
   padding: 15px;
+  color: white;
 }
 .panel-heading {
   padding: 10px 15px;

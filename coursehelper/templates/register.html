@@ -7,19 +7,27 @@
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse">
       <div class="container">
-        <div class="navbar-header"><a href="/"><img src="{{ url_for('static',filename='img/placeholder.png') }}" alt="Project Fate Generator" class="img-responsive"></a></div>
-      </div>
-    </nav>
-    <div class="body-container">
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#">
+            <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
+            </a>-->
+            <a class="navbar-brand" href="#">CourseHelper</a>
+        </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li></div>
+        </ul>
+        </div></nav>
+    <!--<div class="body-container">
       <div class="container-fluid">
         <div class="row-fluid">
           <div class="centering text-center">
             <div class="panel">
               <div class="panel-body">
-      <!--<div align="center" class="body">
-        <div align="center" class="user_reg">-->
+      <div align="center" class="body">
+        <div align="center" class="user_reg">
           <h2>User Registration</h2>
           <div class="space"></div>
           <form id="reg" method="post" action="/add">
@@ -58,7 +66,7 @@
               <div class="content">
                 <div>
                   <input type="submit" value="register">
-                  <!--<button id="register" type="button" class="btn btn-default btn-lg">Register</button></a>-->
+                  <!--<button id="register" type="button" class="btn btn-default btn-lg">Register</button></a>
                 </div>
               </div>
             </div>
@@ -69,6 +77,58 @@
         </div>
       </div>
     </div>
-    </div></div></div>
+    </div></div></div>-->
+    <div class="body-container">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="centering text-center">
+            <div class="panel">
+              <div class="panel-body">
+        <h2>User Registration</h2><br>
+        {% if error %}
+              {{error}}
+              {% endif %}<br><br>
+                <form id="reg" method="post" class="form-horizontal" action="/add">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">Username</label>
+                    <div class="col-md-6">
+                      <input type="text" name="user" id="user" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">Password</label>
+                    <div class="col-md-6">
+                      <input type="Password" name="pass" id="pass" class="form-control">
+                    </div>
+                  </div>
+           <div class="form-group">
+                    <label class="col-md-4 control-label">Password Confirmation</label>
+                    <div class="col-md-6">
+                      <input type="Password" name="pwConf" id="pass-cf" class="form-control">
+                    </div>
+                  </div>
+          <div class="form-group">
+                    <label class="col-md-4 control-label">Email Address</label>
+                    <div class="col-md-6">
+                      <input type="text" name="email" id="email" class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+            <div class="content">
+                <div>
+                  <input type="submit" value="register" class="btn btn-transp btn-lg">
+                  <!--<button id="register" type="button" class="btn btn-default btn-lg">Register</button></a>-->
+                </div>
+              </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
