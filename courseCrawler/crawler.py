@@ -4,7 +4,6 @@ import json
 
 from HTMLParser import HTMLParser
 from bs4 import BeautifulSoup
-from xml.dom.minidom import parseString
 
 class CourseLinkFinder(HTMLParser):
 	def __init__(self, base_url):
@@ -86,7 +85,6 @@ def addMeta(dict, soup):
 		string = string + field.replace("amp;", "&")
 		if field == ')':
 			string = string + " "
-	#dict['meta'] = string.strip()
 	dict['faculty'] = string.split(":")[1].strip()
 
 def addTerms(dict, soup):
@@ -137,13 +135,11 @@ def main():
 		eCalendar = soup.find_all("div", class_="view-content")
 
 		parser = CourseLinkFinder("http://www.mcgill.ca")
-
 		parser.feed(str(eCalendar))
+
 		for i in range(len(parser.links)):
-			#course = jsonifyCourse(parser.links[i])
-			#print json.dumps(course, sort_keys=True)
 			link = parser.links[i]
-			#print "Link : " + str(link)
+
 			print "Link = " + link + '\n'
 			soup = BeautifulSoup(urllib2.urlopen(link).read(), 'html.parser')
 
@@ -154,6 +150,7 @@ def main():
 			courseJSON['id'] = str(idNum)
 
 			JSONToWrite = json.dumps(courseJSON, sort_keys=True)
+			
 			print JSONToWrite
 			print '\n'
 			
@@ -163,5 +160,4 @@ def main():
 	
 	f.close()
 			
-
 main()
