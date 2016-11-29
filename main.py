@@ -14,7 +14,7 @@ EMAIL_REGEX = re.compile(r"[^@\s]+@[^@\s]+\.[a-zA-Z0-9]+$")
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'courseHelper.db'),
-    SECRET_KEY='comp307',
+    SECRET_KEY='749qeBLYQpm633ZR+1WKQnuabvDPXgsd',
     USERNAME='admin',
     PASSWORD='default'
 ))
@@ -70,10 +70,13 @@ def query_db(query, args=(), one=False):
 #   print 'Initialized the database according to the schema'
 
 @app.route('/')
-def hello_world():
+def index():
     print 'hello'
+
     if session.get('logged_in'):
-        return render_template
+        print "WTF"
+        return render_template("loggedin_home.html", username=session['username'])
+
     return render_template("index.html")
 
 @app.route('/register')
@@ -136,20 +139,6 @@ def user_Registration():
         flash('aborting!')
         abort(401)
     db = get_db()
-
-    # print request.form['pass']
-    # print request.form['pwConf']
-    # Check if password entries match
-    # if request.form['pass'] != request.form['pwConf']:
-    #     error = "Error! Password must match Password Confirmation"
-    #     print error
-    #     return render_template("register.html", error=error)
-
-    # # Check if a valid email address was entered
-    # if not EMAIL_REGEX.match(request.form['email']):
-    #     error = "Error! Please input a valid email address"
-    #     print error
-    #     return render_template("register.html", error=error)
 
     userName = str(request.form['user'])
     passwd = str(request.form['pass'])
@@ -218,13 +207,16 @@ def login():
         #         return redirect(url_for('show_entries'))
 
         session['logged_in'] = True
-        return render_template("loggedin_home.html", username=str(request.form['user']))
+        session['username'] = userName
+
+        return render_template("loggedin_home.html", username=session['username'])
 
     else:
         return render_template("index.html", error=None)
 
-# @app.route('/logout')
-# def logout():
-#     session.pop('logged_in', None)
-#     flash('You were logged out')
-#     return redirect(url_for('show_entries'))
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    print "Logout successful"
+    return redirect(url_for('index'))
+
