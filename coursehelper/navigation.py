@@ -73,7 +73,7 @@ def checkValidPost(post):
 
 def addPostAttempt(request, session):
 	post = request.form['post']
-	courseid = request.form['courseid']
+	courseid = formatQuery(request.form['courseid'])
 	print "Wants to add Post: " + post + " to Course : " + courseid
 
 	error = checkValidPost(post)
