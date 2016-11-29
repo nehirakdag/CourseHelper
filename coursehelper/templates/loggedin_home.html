@@ -5,8 +5,19 @@
     <title>IDK</title>
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
+
+    <script type="text/javascript">
+      function OnSubmitForm()
+      {
+         var search = document.getElementById("searchtxt");
+         var str1 = "/courses/";
+         document.searchform.action = str1.concat(search);
+         return true;
+        }
+    </script>
   </head>
   <body>
+
     <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -18,7 +29,23 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Link</a></li></div>
-        </ul></div></nav>
+        </ul>
+        <form name="searchform" class="navbar-form navbar-left" role="search" onsubmit="return onSubmitSearch()">
+          <div class="form-group" style="display: inline;">
+            <input type="text" name="searchtxt" class="form-control" placeholder="Search">
+          </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+      </div></nav>
+         <script type="text/javascript">
+      function onSubmitSearch()
+      {
+         var x = document.getElementById("myForm").elements.namedItem("searchtxt").value;
+         var str1 = "/courses/";
+         document.searchform.action = str1.concat(search);
+         return true;
+        }
+    </script>
     <div class="body-container">
       <div class="container-fluid">
         <div class="row-fluid">
