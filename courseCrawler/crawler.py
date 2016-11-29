@@ -116,7 +116,7 @@ def addDescription(dict, soup):
 	infoList = getInnerContentList(soup, 'div', 'content')[0]
 	infoList = infoList[0].findAll('div', {'class': 'content'})
 	infoList = infoList[0].findAll('p')
-	dict['decription'] = formatLine(infoList[0]).strip()
+	dict['description'] = formatLine(infoList[0]).strip()
 
 def addCourse(dict, soup):
 	addTitleAndName(dict, soup)

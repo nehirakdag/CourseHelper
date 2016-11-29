@@ -18,7 +18,7 @@ app.config.update(dict(
 import coursehelper.views
 import coursehelper.coursesToDB
 
-# with app.app_context():
-#     coursesToDB.putCoursesToDB()
+#with app.app_context():
+    #coursesToDB.putCoursesToDB()
 #app.config.from_envvar('COURSEHELPER_SETTINGS', silent=True)
 
