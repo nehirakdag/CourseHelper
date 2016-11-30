@@ -131,3 +131,20 @@ def followCourse():
     else:
         return redirect(url_for('index'))
 
+
+@app.route('/addreview', methods=['GET', 'POST'])
+def addReview():
+    print 'hello from addReview'
+
+    if request.method == 'POST':
+        error = navigation.addReviewAttempt(request, session)
+        courseid = request.form['courseid']
+        #print "Course name is: " + courseid
+
+        # add error handling?
+        return redirect(url_for('reviewspage', courseid=courseid))
+
+    else:
+        return redirect(url_for('index'))
+
+

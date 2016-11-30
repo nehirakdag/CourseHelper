@@ -97,7 +97,7 @@
                       <!--<input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control" placeholder="Your review goes here!">-->
 
                       <!-- <div class="col-md-6"> -->
-                          <textarea class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
+                          <textarea name="review" class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
                       <!-- </div> -->
                       <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
@@ -110,7 +110,7 @@
                 {% for review in reviews %}
                 <div class="panel-small">
                   <div class="panel-body">
-                    <h4>{{ review.text}}<br><small>{{ review.tstamp }}</small></h4>
+                    <h4>{{ review.text }}<br><small>{{ review.tstamp }}</small></h4>
                   </div>
                 </div>
                 {% endfor %}

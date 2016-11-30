@@ -173,5 +173,31 @@ def getCoursesFollowed(username):
 	return coursesFollowed
 
 
+def addReviewAttempt(request, session):
+	review = request.form['review']
+	courseid = formatQuery(request.form['courseid'])
+	print "Wants to add Post: " + post + " to Course : " + courseid
+
+	error = checkValidPost(post)
+
+	if not error is None:
+		print error
+		return error
+
+	username = session['username']
+	timestamp = datetime.datetime.now().strftime("%H:%M %Y-%m-%d")
+	db = get_db()
+
+	try:
+		db.execute('INSERT INTO posts (userid, courseid, post, tstamp) VALUES (?, ?, ?, ?)', [username, courseid, post, timestamp])
+		db.commit()
+    #if not, redirect user to registration page
+	except IntegrityError:
+		db.rollback()
+		error = "Invalid Entry!"
+		print error
+		return error
+
+	return error
 
 
