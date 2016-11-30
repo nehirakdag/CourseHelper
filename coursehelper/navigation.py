@@ -185,7 +185,7 @@ def addReviewAttempt(request, session):
 	review = request.form['review']
 	courseid = formatQuery(request.form['courseid'])
 	
-	print "Wants to add Post: " + review + " to Course : " + courseid
+	print "Wants to add review: " + review + " to Course : " + courseid
 
 	error = checkValidReview(review)
 
@@ -198,7 +198,7 @@ def addReviewAttempt(request, session):
 	db = get_db()
 
 	try:
-		db.execute('INSERT INTO posts (userid, courseid, post, tstamp) VALUES (?, ?, ?, ?)', [username, courseid, review, timestamp])
+		db.execute('INSERT INTO reviews (tstamp, courseid, userid, review) VALUES (?, ?, ?, ?)', [timestamp, courseid, username, review])
 		db.commit()
     #if not, redirect user to registration page
 	except IntegrityError:
@@ -209,4 +209,25 @@ def addReviewAttempt(request, session):
 
 	return error
 
+
+def getCourseReviews(courseID):
+	courseReviews = []
+
+	if regexCheck(courseID):
+		query = formatQuery(courseID)
+		#print "Asking for posts for course: " + query 
+		
+		db = get_db()
+		db.row_factory = dict_factory
+
+		result = query_db('SELECT * FROM reviews WHERE courseid = (?)', (query, ) , one=False)
+
+		#print "Received: " + str(result)
+
+		if not result is None:
+			for desc in result:
+				#print "checking : " + str(desc)
+				courseReviews.append(desc)
+
+	return courseReviews
 

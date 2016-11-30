@@ -113,9 +113,9 @@ def reviewspage(courseid):
 
     # If a valid course was entered, fetch the posts associated with it and render its page
     else:
-        coursePosts = navigation.getCoursePosts(courseid)
+        courseReviews = navigation.getCourseReviews(courseid)
         isFollowing = navigation.checkIfFollowing(courseid, session['username'])
-        return render_template("reviews.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], following=isFollowing)
+        return render_template("reviews.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], reviews=courseReviews, following=isFollowing)
 
 
 @app.route('/followcourse', methods=['GET', 'POST'])
