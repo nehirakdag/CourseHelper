@@ -83,6 +83,14 @@ def checkValidPost(post):
 
 	return error
 
+def checkValidReview(review):
+	error = None
+
+	if len(review) < 5:
+		error = "Error! Post must contain at least 5 characters"
+
+	return error
+
 def addPostAttempt(request, session):
 	post = request.form['post']
 	courseid = formatQuery(request.form['courseid'])
@@ -113,7 +121,7 @@ def addPostAttempt(request, session):
 
 def followCourseAttempt(request, session):
 	follow = request.form['wantstofollow']
-	courseid = request.form['courseid']
+	courseid = formatQuery(request.form['courseid'])
 	username = session['username']
 
 	error = None
@@ -176,9 +184,10 @@ def getCoursesFollowed(username):
 def addReviewAttempt(request, session):
 	review = request.form['review']
 	courseid = formatQuery(request.form['courseid'])
-	print "Wants to add Post: " + post + " to Course : " + courseid
+	
+	print "Wants to add Post: " + review + " to Course : " + courseid
 
-	error = checkValidPost(post)
+	error = checkValidReview(review)
 
 	if not error is None:
 		print error
@@ -189,7 +198,7 @@ def addReviewAttempt(request, session):
 	db = get_db()
 
 	try:
-		db.execute('INSERT INTO posts (userid, courseid, post, tstamp) VALUES (?, ?, ?, ?)', [username, courseid, post, timestamp])
+		db.execute('INSERT INTO posts (userid, courseid, post, tstamp) VALUES (?, ?, ?, ?)', [username, courseid, review, timestamp])
 		db.commit()
     #if not, redirect user to registration page
 	except IntegrityError:

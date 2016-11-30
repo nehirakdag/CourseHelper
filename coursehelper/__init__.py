@@ -2,7 +2,6 @@ import os
 
 from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
 from flask_bootstrap import Bootstrap
-from contextlib import closing
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -18,7 +17,7 @@ app.config.update(dict(
 import coursehelper.views
 import coursehelper.coursesToDB
 
-#with app.app_context():
-    #coursesToDB.putCoursesToDB()
+# with app.app_context():
+    # coursesToDB.putCoursesToDB()
 #app.config.from_envvar('COURSEHELPER_SETTINGS', silent=True)
 

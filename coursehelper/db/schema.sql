@@ -11,7 +11,7 @@ CREATE TABLE courses (
 );
 DROP TABLE IF EXISTS reviews;
 CREATE TABLE reviews (
-	rid TEXT PRIMARY KEY,
+	reviewid INTEGER PRIMARY KEY AUTOINCREMENT,
 	tstamp TEXT NOT NULL,
 	courseid TEXT NOT NULL,
 	userid TEXT NOT NULL,

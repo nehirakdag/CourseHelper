@@ -69,6 +69,7 @@
                 <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this course" id="followbtn" onclick="toggleFollow()">
                 <input type="hidden" name="courseid" value="{{ courseid }}">
                 <input type="hidden" name="wantstofollow" value="false">
+                <br><br>
             </form>
             {% else %}
             <form name="followform" action="/followcourse" method="post">
@@ -79,7 +80,7 @@
               </div>
             </form>
             {% endif %}
-            <br>
+            
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Course Feed</u></h3>
@@ -88,7 +89,7 @@
                   <form id="reg" method="post" class="form-horizontal" action="/addpost">
 
                     <div class="form-group">
-                      <input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control">
+                      <textarea class="form-control" rows="3" placeholder="Your post goes here!" required></textarea>
                       <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
                     <div class="form-group">

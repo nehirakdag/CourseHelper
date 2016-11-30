@@ -1,7 +1,11 @@
 import os
 import sqlite3
+
 from coursehelper import app
+from coursehelper import coursesToDB
+from contextlib import closing
 from flask import g
+
 
 #Connect to the database
 @app.before_request
@@ -36,8 +40,10 @@ def init_db():
             db.commit()
 
 # If the database file is not present in the desired location, create a new one
-if not(os.path.exists(app.config['DATABASE'])):
-    init_db()
+with app.app_context():
+    if not(os.path.exists(app.config['DATABASE'])):
+        init_db()
+        coursesToDB.putCoursesToDB()
 
 # Function that allows any generic queries to be passed to the database
 def query_db(query, args=(), one=False):
