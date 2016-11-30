@@ -211,4 +211,24 @@ def resourcespage(courseid):
         isFollowing = navigation.checkIfFollowing(courseid, session['username'])
         return render_template("resources.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], resources=courseResources, following=isFollowing)
 
+@app.route('/uploadresource', methods=['GET', 'POST'])
+def uploadResource():
+
+    if request.method == 'POST' and session.get('logged_in'):
+        error = None
+
+        courseid = request.form['courseid']
+
+        if 'file[]' not in request.files:
+            error = "No file entered"
+            return redirect(url_for('resourcespage', courseid=courseid))
+
+        uploadAttempt = upload.uploadFilesAttempt(request, session)
+            
+        return redirect(url_for('resourcespage', courseid=courseid))
+
+    return redirect(url_for('index'))
+
+
+
 

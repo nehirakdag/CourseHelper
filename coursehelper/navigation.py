@@ -278,11 +278,18 @@ def deleteReviewAttempt(request, session):
 
 
 def getCourseResources(courseid):
-	resource = {}
-	resource['url'] = "lel"
-	resource['name'] = "lil"
 
-	return [resource]
+	db = get_db()
+	db.row_factory = dict_factory
+
+	resources = query_db('SELECT * FROM resources WHERE courseid = (?)', (courseid, ) , one=False)
+
+	if resources is None:
+		resources = {}
+
+	print resources
+
+	return resources
 
 
 
