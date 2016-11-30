@@ -10,7 +10,9 @@ from flask import redirect, render_template, url_for, abort, flash, request, ses
 def index():
     print 'hello'
     if session.get('logged_in'):
-        return render_template("loggedin_home.html", username=session['username'])
+        username = session['username']
+        coursesFollowed = navigation.getCoursesFollowed(username)
+        return render_template("loggedin_home.html", username=username, courses=coursesFollowed)
 
     return render_template("index.html")
 
@@ -63,16 +65,11 @@ def logout():
 
 @app.route('/courses/<courseid>/')
 def coursepage(courseid):
-    print "TESTTTTT"
-    print courseid
     if not courseid.strip():
         return redirect(url_for('index'))
-    #print "Course ID is = " + courseid
 
     # Lookup the database for the passed query
     courseInfo = navigation.getCourseInfo(courseid)
-
-    #print courseInfo
 
     # If no course was found, return user to their main profile page
     if not courseInfo:
@@ -108,7 +105,6 @@ def addPost():
 def reviewspage(courseid):
     
     courseInfo = navigation.getCourseInfo(courseid)
-
     #print courseInfo
 
     # If no course was found, return user to their main profile page
@@ -126,9 +122,7 @@ def followCourse():
 
     if request.method == 'POST':
         error = navigation.followCourseAttempt(request, session)
-        
         courseid = request.form['courseid']
-        #print "Course name is: " + courseid
 
         # add error handling?
         return redirect(url_for('coursepage', courseid=courseid))

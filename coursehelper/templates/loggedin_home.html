@@ -71,7 +71,7 @@
                 Here are the courses you're following:
                 <ul>
                 {% for course in courses %}
-                <li> course </li>
+                <li> <a href="/courses/{{course.courseid}}"> {{course.courseid}} </a></li>
                 {% endfor %}
                 {% else %}
                 <br>

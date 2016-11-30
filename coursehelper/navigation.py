@@ -2,6 +2,7 @@ import re
 import yaml
 import datetime
 import sqlite3
+import collections
 
 from database import get_db, query_db
 from sqlite3 import IntegrityError, Row
@@ -11,6 +12,17 @@ def dict_factory(cursor, row):
     for idx, col in enumerate(cursor.description):
         d[col[0]] = row[idx]
     return d
+
+def convertToString(data):
+	if isinstance(data, basestring):
+		return str(data)
+	elif isinstance(data, collections.Mapping):
+		return dict(map(convertToString, data.iteritems()))
+	elif isinstance(data, collections.Iterable):
+		return type(data)(map(convertToString, data))
+	else:
+		return data
+
 
 def regexCheck(searchQuery):
 	return re.match(r'^[a-zA-Z]{4}\s?[0-9]{3}([a-zA-Z]\d)?$', searchQuery)
@@ -141,6 +153,25 @@ def checkIfFollowing(courseid, username):
 
 	print "returning " + str(following)
 	return following
+
+
+def getCoursesFollowed(username):
+	coursesFollowed = []
+	db = get_db()
+	db.row_factory = dict_factory
+
+	print "Checking the courses user: " + username + " follows"
+	
+	coursesFound = query_db('SELECT * FROM coursefollowers WHERE userid = (?)', (username, ) , one=False)
+
+	if not coursesFound is None:
+			for course in coursesFound:
+				print "checking : " + str(course)
+				coursesFollowed.append(course)
+
+	print "returning: " + str(convertToString(coursesFollowed))
+	return coursesFollowed
+
 
 
 
