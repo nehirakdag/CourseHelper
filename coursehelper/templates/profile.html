@@ -34,16 +34,22 @@
         <li><a href="#">Link</a></li>
         </ul>
         <form id="searchform" class="navbar-form" role="search" onsubmit="return onSubmitSearch()">
-          <div class="form-group" style="display: inline;">
-            <input type="text"  id="searchtxt" class="form-control" placeholder="Search">
-          </div>
-            <button type="submit" class="btn-orig btn-default">Submit</button>
-          </form>
-          <form class="navbar-form navbar-right" role="logout" action="/logout">
-            <div class="form-group">
-              <button type="submit" class="btn-orig btn-default">Logout </button>
-            </div>
-          </form>
+        <div class="form-group" style="display: inline;">
+          <input type="text"  id="searchtxt" class="form-control" placeholder="Search">
+        </div>
+          <button type="submit" class="btn-orig btn-default">Submit</button>
+        </form>
+        <form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
+        <div class="form-group" style="display: inline;">
+          <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
+        </div>
+          <button type="submit" class="btn-orig btn-default">Submit</button>
+        </form>
+      <form class="navbar-form navbar-right" role="logout" action="/logout">
+        <div class="form-group">
+          <button type="submit" class="btn-orig btn-default">Logout </button>
+        </div>
+      </form>
       </div>
   </nav>
        <script type="text/javascript">
@@ -57,6 +63,18 @@
          var query = str1.concat(x);
          // console.log(query);
          document.getElementById("searchform").action = str1.concat(x,"/");
+         return true;
+        }
+        function onSubmitSearchUser()
+      {
+         var x = document.getElementById("searchusertxt").value;
+         if( x.trim() == "") {
+          return false;
+         }
+         var str1 = "/profiles/";
+         var query = str1.concat(x);
+         // console.log(query);
+         document.getElementById("searchuserform").action = str1.concat(x,"/");
          return true;
         }
     </script>

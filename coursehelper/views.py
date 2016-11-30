@@ -11,7 +11,7 @@ def index():
     if session.get('logged_in'):
         username = session['username']
         coursesFollowed = navigation.getCoursesFollowed(username)
-        return render_template("profile.html", username=username, courses=coursesFollowed)
+        return render_template("homepage.html", username=username, courses=coursesFollowed)
 
     return render_template("index.html")
 
@@ -154,9 +154,13 @@ def profilePage(userid):
     # Viewer must be logged in to attempt to view a profile
     if session.get('logged_in') and navigation.checkIfUserExists(userid):
         coursesFollowed = navigation.getCoursesFollowed(userid)
-        return render_template("profile.html", username=userid, courses=coursesFollowed)
 
-    return render_template("index.html")
+        if session['username'] == userid:
+            return redirect(url_for('index'))
+        else:
+            return render_template("profile.html", username=userid, courses=coursesFollowed)
+
+    return redirect(url_for('index'))
 
 
 @app.route('/deletepost', methods=['GET', 'POST'])
