@@ -80,7 +80,7 @@ def coursepage(courseid):
         coursePosts = navigation.getCoursePosts(courseid)
         isFollowing = navigation.checkIfFollowing(courseid, session['username'])
 
-        return render_template("coursepg.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts, following=isFollowing)
+        return render_template("coursepg.html", viewer=session['username'], courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts, following=isFollowing)
 
     return redirect(url_for('index'))
 
@@ -155,6 +155,23 @@ def profilePage(userid):
         return render_template("profile.html", username=userid, courses=coursesFollowed)
 
     return render_template("index.html")
+
+
+@app.route('/deletepost', methods=['GET', 'POST'])
+def deletePost():
+
+    if request.method == 'POST':
+        error = navigation.deletePostAttempt(request, session)
+
+        if not error is None:
+            return redirect(url_for('index'))
+        else:
+            courseid = request.form['courseid']
+        return redirect(url_for('coursepage', courseid=courseid))
+
+    return redirect(url_for('index'))
+
+
 
 
 

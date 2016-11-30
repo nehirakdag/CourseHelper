@@ -188,7 +188,6 @@ def addReviewAttempt(request, session):
 	courseid = formatQuery(request.form['courseid'])
 	
 	print "Wants to add review: " + review + " to Course : " + courseid
-
 	error = checkValidReview(review)
 
 	if not error is None:
@@ -197,10 +196,13 @@ def addReviewAttempt(request, session):
 
 	username = session['username']
 	timestamp = datetime.datetime.now().strftime("%H:%M %Y-%m-%d")
+	stars = request.form['stars']
+	print "Stars is : " + str(stars)
+
 	db = get_db()
 
 	try:
-		db.execute('INSERT INTO reviews (tstamp, courseid, userid, review) VALUES (?, ?, ?, ?)', [timestamp, courseid, username, review])
+		db.execute('INSERT INTO reviews (tstamp, courseid, userid, review, stars) VALUES (?, ?, ?, ?, ?)', [timestamp, courseid, username, review, stars])
 		db.commit()
     #if not, redirect user to registration page
 	except IntegrityError:
@@ -244,5 +246,28 @@ def checkIfUserExists(username):
 		exists = True
 
 	return exists
+
+def deletePostAttempt(request, session):
+	username = session['username']
+	postid = request.form['postid']
+	error = None
+
+	db = get_db()
+
+	try:
+		db.execute('DELETE FROM posts WHERE userid=? AND postid=?', [username, postid])
+		db.commit()
+	except IntegrityError:
+		error = "Error! Invalid attempt"
+		print error
+
+	return error
+
+
+
+
+
+
+
 
 
