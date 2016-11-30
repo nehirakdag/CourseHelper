@@ -37,12 +37,11 @@ def formatQuery(searchQuery):
 	return query
 
 def getCourseInfo(courseID):
-	print "TEST"
 	courseInfo = {}
 
 	if regexCheck(courseID):
 		query = formatQuery(courseID)
-		print "Searching for : " + query
+		#print "Searching for : " + query
 
 		db = get_db()
 		db.row_factory = Row
@@ -92,11 +91,9 @@ def checkValidReview(review):
 	return error
 
 def addPostAttempt(request, session):
-	print "hello from addPostAttempt"
 	post = request.form['post']
-	print "???"
 	courseid = formatQuery(request.form['courseid'])
-	print "Wants to add Post: " + post + " to Course : " + courseid
+	#print "Wants to add Post: " + post + " to Course : " + courseid
 
 	error = checkValidPost(post)
 
@@ -151,17 +148,16 @@ def checkIfFollowing(courseid, username):
 
 	checkCourse = formatQuery(courseid)
 
-	print "Checking if " + username + " follows course: " + checkCourse
+	#print "Checking if " + username + " follows course: " + checkCourse
 	try:
 		result = query_db('SELECT * FROM coursefollowers WHERE userid=(?) AND courseid=(?)', (username, checkCourse, ) , one=True)
-		print "Found: " + str(result)
+		#print "Found: " + str(result)
 		if not result is None:
 			following = True
 
 	except IntegrityError:
 		db.rollback()
 
-	print "returning " + str(following)
 	return following
 
 
@@ -170,16 +166,15 @@ def getCoursesFollowed(username):
 	db = get_db()
 	db.row_factory = dict_factory
 
-	print "Checking the courses user: " + username + " follows"
+	#print "Checking the courses user: " + username + " follows"
 	
 	coursesFound = query_db('SELECT * FROM coursefollowers WHERE userid = (?)', (username, ) , one=False)
 
 	if not coursesFound is None:
 			for course in coursesFound:
-				print "checking : " + str(course)
 				coursesFollowed.append(course)
 
-	print "returning: " + str(convertToString(coursesFollowed))
+	#print "returning: " + str(convertToString(coursesFollowed))
 	return coursesFollowed
 
 
@@ -187,7 +182,7 @@ def addReviewAttempt(request, session):
 	review = request.form['review']
 	courseid = formatQuery(request.form['courseid'])
 	
-	print "Wants to add review: " + review + " to Course : " + courseid
+	#print "Wants to add review: " + review + " to Course : " + courseid
 	error = checkValidReview(review)
 
 	if not error is None:
@@ -197,7 +192,7 @@ def addReviewAttempt(request, session):
 	username = session['username']
 	timestamp = datetime.datetime.now().strftime("%H:%M %Y-%m-%d")
 	stars = request.form['stars']
-	print "Stars is : " + str(stars)
+	#print "Stars is : " + str(stars)
 
 	db = get_db()
 
@@ -247,6 +242,7 @@ def checkIfUserExists(username):
 
 	return exists
 
+
 def deletePostAttempt(request, session):
 	username = session['username']
 	postid = request.form['postid']
@@ -264,7 +260,29 @@ def deletePostAttempt(request, session):
 	return error
 
 
+def deleteReviewAttempt(request, session):
+	username = session['username']
+	reviewid = request.form['reviewid']
+	error = None
 
+	db = get_db()
+
+	try:
+		db.execute('DELETE FROM reviews WHERE userid=? AND reviewid=?', [username, reviewid])
+		db.commit()
+	except IntegrityError:
+		error = "Error! Invalid attempt"
+		print error
+
+	return error
+
+
+def getCourseResources(courseid):
+	resource = {}
+	resource['url'] = "lel"
+	resource['name'] = "lil"
+
+	return [resource]
 
 
 

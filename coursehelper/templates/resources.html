@@ -16,7 +16,7 @@
             <a class="navbar-brand" href="/">CourseHelper</a>
         </div>
       <ul class="nav navbar-nav">
-        <li><a href="#">Course Feed </a></li>
+        <li><a href="/courses/{{courseid}}/">Course Feed </a></li>
         <li class="active"><a href="#">Resources<span class="sr-only">(current)</span></a></li>
         <li><a href="reviews">Reviews</a></li>
       </ul>
@@ -68,17 +68,21 @@
               <div class="form-group">
                 <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this course" id="followbtn" onclick="toggleFollow()">
                 <input type="hidden" name="courseid" value="{{ courseid }}">
-                <input type="hidden" name="wantstofollow" value="false"><br>
+                <input type="hidden" name="pageName" value="resourcespage">
+                <input type="hidden" name="wantstofollow" value="false">
+              </div>
             </form>
             {% else %}
             <form name="followform" action="/followcourse" method="post">
               <div class="form-group">
                 <input type="submit" class="btn-orig btn-success btn-sm" value="Follow this course" id="followbtn" onclick="toggleFollow()">
                 <input type="hidden" name="courseid" value="{{ courseid }}">
+                <input type="hidden" name="pageName" value="resourcespage">
                 <input type="hidden" name="wantstofollow" value="true">
               </div>
             </form>
             {% endif %}
+            <br>
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Resources</u></h3>

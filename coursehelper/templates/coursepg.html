@@ -63,19 +63,21 @@
         <div class="row-fluid">
             <h2> {{ coursetitle }} <br><small>
              {{ coursedesc }} </small></h2>
-             {% if following==True %}
+            {% if following==True %}
              <form name="followform" action="/followcourse" method="post">
               <div class="form-group">
                 <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this course" id="followbtn" onclick="toggleFollow()">
                 <input type="hidden" name="courseid" value="{{ courseid }}">
+                <input type="hidden" name="pageName" value="coursepage">
                 <input type="hidden" name="wantstofollow" value="false">
-                <br><br>
+              </div>
             </form>
             {% else %}
             <form name="followform" action="/followcourse" method="post">
               <div class="form-group">
                 <input type="submit" class="btn-orig btn-success btn-sm" value="Follow this course" id="followbtn" onclick="toggleFollow()">
                 <input type="hidden" name="courseid" value="{{ courseid }}">
+                <input type="hidden" name="pageName" value="coursepage">
                 <input type="hidden" name="wantstofollow" value="true">
               </div>
             </form>
