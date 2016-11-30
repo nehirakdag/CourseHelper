@@ -17,7 +17,7 @@
         </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Course Feed <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Resources</a></li>
+        <li><a href="resources">Resources</a></li>
         <li><a href="reviews">Reviews</a></li>
       </ul>
       <form id="searchform" class="navbar-form" role="search" onsubmit="return onSubmitSearch()">
@@ -80,7 +80,7 @@
               </div>
             </form>
             {% endif %}
-            
+            <br>
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Course Feed</u></h3>
@@ -89,20 +89,27 @@
                   <form id="reg" method="post" class="form-horizontal" action="/addpost">
 
                     <div class="form-group">
-                      <textarea name="post" class="form-control" rows="3" placeholder="Your post goes here!" required></textarea>
+                      <textarea name="post" class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
                       <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
                     <div class="form-group">
                       <input type="submit" class="btn btn-transp" value="Submit">
                     </div>
 
+
                     </form>
                     </div>
                 {% for post in posts %}
                 <div class="panel-small">
                   <div class="panel-body">
-                    <h4>Posted by <a href="#">{{ post.userid }} </a><small>{{ post.tstamp }}</small></h4>
+                    <h4>Posted by <a href="/profiles/{{ post.userid }}">{{ post.userid }} </a><small>{{ post.tstamp }}</small></h4>
                     <h4> {{ post.post}} </h4>
+                    <form name="delete" action="/whateverfloatsyourboat" method="post">
+                     <div class="form-group">
+                     <input type="submit" class="btn-orig btn-warning btn-sm" value="Delete">
+                     <input type="hidden" name="postid" value="{{ post.postid }}">
+                     </div>
+                     </form>
                   </div>
                 </div>
                 {% endfor %}

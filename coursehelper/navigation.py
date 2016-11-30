@@ -233,3 +233,16 @@ def getCourseReviews(courseID):
 
 	return courseReviews
 
+
+def checkIfUserExists(username):
+	exists = False
+
+	db = get_db()
+	userInfo = query_db('SELECT * FROM users WHERE username = ?', (username, ) , one=True)
+
+	if not userInfo is None:
+		exists = True
+
+	return exists
+
+

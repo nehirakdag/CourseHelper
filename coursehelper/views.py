@@ -12,7 +12,7 @@ def index():
     if session.get('logged_in'):
         username = session['username']
         coursesFollowed = navigation.getCoursesFollowed(username)
-        return render_template("loggedin_home.html", username=username, courses=coursesFollowed)
+        return render_template("profile.html", username=username, courses=coursesFollowed)
 
     return render_template("index.html")
 
@@ -146,5 +146,15 @@ def addReview():
 
     else:
         return redirect(url_for('index'))
+
+
+@app.route('/profiles/<userid>/')
+def profilePage(userid):
+    if session.get('logged_in') and navigation.checkIfUserExists(userid):
+        coursesFollowed = navigation.getCoursesFollowed(userid)
+        return render_template("profile.html", username=userid, courses=coursesFollowed)
+
+    return render_template("index.html")
+
 
 

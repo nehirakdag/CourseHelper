@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>IDK</title>
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
+    <!--<link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/user-reg.css') }}">-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid-orig">
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#">
+            <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
+            </a>-->
+            <a class="navbar-brand" href="/">CourseHelper</a>
+        </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Course Feed <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="reviews">Reviews</a></li>
+      </ul>
+      <form id="searchform" class="navbar-form" role="search" onsubmit="return onSubmitSearch()">
+        <div class="form-group" style="display: inline;">
+          <input type="text"  id="searchtxt" class="form-control" placeholder="Search">
+        </div>
+          <button type="submit" class="btn-orig btn-default">Submit</button>
+        </form>
+      <form class="navbar-form navbar-right" role="logout" action="/logout">
+        <div class="form-group">
+          <button type="submit" class="btn-orig btn-default">Logout </button>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <script type="text/javascript">
+      function onSubmitSearch()
+      {
+         var x = document.getElementById("searchtxt").value;
+         if( x.trim() == "") {
+          return false;
+         }
+         var str1 = "/courses/";
+         var query = str1.concat(x);
+         // console.log(query);
+         document.getElementById("searchform").action = str1.concat(x,"/");
+         return true;
+        }
+
+        function toggleFollow() {
+          if (document.getElementById("followbtn").value=="Follow this course") {
+            document.getElementById("followbtn").className = "btn-orig btn-sm btn-danger";
+            document.getElementById("followbtn").value = "Unfollow this course";
+          } else {
+            document.getElementById("followbtn").className = "btn-orig btn-sm btn-success";
+            document.getElementById("followbtn").value = "Follow this course";
+          }
+          return true;
+        }
+  </script>
+    <div class="body-container">
+      <div class="container-fluid-cr">
+        <div class="row-fluid">
+            <h2> {{ coursetitle }} <br><small>
+             {{ coursedesc }} </small></h2>
+             {% if following==True %}
+             <form name="followform" action="/followcourse" method="post">
+              <div class="form-group">
+                <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this course" id="followbtn" onclick="toggleFollow()">
+                <input type="hidden" name="courseid" value="{{ courseid }}">
+                <input type="hidden" name="wantstofollow" value="false">
+                <br><br>
+            </form>
+            {% else %}
+            <form name="followform" action="/followcourse" method="post">
+              <div class="form-group">
+                <input type="submit" class="btn-orig btn-success btn-sm" value="Follow this course" id="followbtn" onclick="toggleFollow()">
+                <input type="hidden" name="courseid" value="{{ courseid }}">
+                <input type="hidden" name="wantstofollow" value="true">
+              </div>
+            </form>
+            {% endif %}
+            
+            <div class="panel">
+              <div class="panel-body">
+                <h3><u>Course Feed</u></h3>
+                  <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a post </h4>
+                  <div class="panel-transp">
+                  <form id="reg" method="post" class="form-horizontal" action="/addpost">
+
+                    <div class="form-group">
+                      <textarea name="post" class="form-control" rows="3" placeholder="Your post goes here!" required></textarea>
+                      <input type="hidden" name="courseid" value="{{ courseid }}">
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-transp" value="Submit">
+                    </div>
+
+                    </form>
+                    </div>
+                {% for post in posts %}
+                <div class="panel-small">
+                  <div class="panel-body">
+                    <h4>Posted by <a href="#">{{ post.userid }} </a><small>{{ post.tstamp }}</small></h4>
+                    <h4> {{ post.post}} </h4>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
