@@ -1,11 +1,18 @@
 import os
 
-from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
+from flask import Flask, Request, render_template, request, session, g, redirect, url_for, abort, flash
 from flask_bootstrap import Bootstrap
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 Bootstrap(app)
+
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, './db/courseHelper.db'),

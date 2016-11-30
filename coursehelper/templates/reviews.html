@@ -113,8 +113,8 @@
                   <form id="reg" method="post" class="form-horizontal" action="/addreview">
 
                     <div class="form-group">
-                    <input name="stars" id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=1 data-size="xs">
-                    <input id="input-21d" value="4" type="number" class="rating" data-size="xs" readonly="true">
+                    <input name="stars" id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=1>
+                    <!-- <input id="input-21d" value="4" type="number" class="rating" data-size="xs" readonly="true"> -->
                      </div>
                       <!--<input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control" placeholder="Your review goes here!">-->
 
@@ -132,7 +132,11 @@
                 {% for review in reviews %}
                 <div class="panel-small">
                   <div class="panel-body">
-                    <h4>{{ review.review }}<br><small>{{ review.tstamp }}</small></h4>
+                    <h4>{{ review.review }}<br>
+                      {% if review.stars != 0 %}
+                      <input name="stars" id="input-21d" value="{{review.stars}}" type="number" class="rating" data-size="xs" data-show-clear="false" data-display-only="true">
+                    {% endif %}
+                      <small>{{ review.tstamp }}</small></h4>
                     {% if viewer == review.userid %}
                     <form name="delete" action="/deletereview" method="post">
                      <div class="form-group">

@@ -8,6 +8,8 @@ def putCoursesToDB():
 	parent = os.path.abspath(os.path.join(current, os.pardir))
 	path = parent + "/courseCrawler/courses.txt"
 
+	uploads = current + "/uploads/"
+
 	#dontInclude = re.compile(r'[a-zA-Z]\d\\')
 	previous = ""
 	print "Seeding the database!!!!"
@@ -44,6 +46,10 @@ def putCoursesToDB():
 					db = database.get_db()
 					db.execute('INSERT INTO courses (courseid, description) VALUES (?, ?)', [keyToStore , str(courseJSON).replace('\'', '"')])
 	        		db.commit()
+
+	        		uploadFolder = uploads + keyToStore
+	        		if not os.path.exists(uploadFolder):
+    					os.makedirs(uploadFolder)
 
 	        	previous = keyToStore
 		print str(i)

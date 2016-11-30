@@ -286,6 +286,3 @@ def getCourseResources(courseid):
 
 
 
-
-
-

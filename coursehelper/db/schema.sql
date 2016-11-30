@@ -32,5 +32,15 @@ CREATE TABLE posts (
 	parentid TEXT,
 	post TEXT NOT NULL,
 	tstamp TEXT NOT NULL
+);
+DROP TABLE IF EXISTS resources;
+CREATE TABLE resources (
+	resoureid INTEGER PRIMARY KEY AUTOINCREMENT,
+	userid TEXT NOT NULL,
+	courseid TEXT NOT NULL,
+	title TEXT NOT NULL,
+	url TEXT NOT NULL,
+	description TEXT,
+	tstamp TEXT NOT NULL
 )
 

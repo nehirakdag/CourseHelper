@@ -1,6 +1,7 @@
 import registerlogin
 import navigation
 import datetime
+import upload
 
 from coursehelper import app
 from flask import redirect, render_template, url_for, abort, flash, request, session
@@ -48,7 +49,7 @@ def login():
 
         # Render appropriate page depending on the response
         if not error is None:
-            return redirect(url_for('index', error=error))
+            return render_template("index.html", error=error)
         else:
             return redirect(url_for('index'))
     else:
@@ -209,4 +210,5 @@ def resourcespage(courseid):
         courseResources = navigation.getCourseResources(courseid)
         isFollowing = navigation.checkIfFollowing(courseid, session['username'])
         return render_template("resources.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], resources=courseResources, following=isFollowing)
+
 
