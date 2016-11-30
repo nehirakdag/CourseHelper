@@ -100,12 +100,47 @@ def addPostAttempt(request, session):
 
 
 def followCourseAttempt(request, session):
-	follow = request.form['followbtn']
-	print follow
-	return None
+	follow = request.form['wantstofollow']
+	courseid = request.form['courseid']
+	username = session['username']
+
+	error = None
+	
+	try:
+		db = get_db()
+
+		if follow == "true":
+			db.execute('INSERT INTO coursefollowers (userid, courseid) VALUES (?, ?)', [username, courseid])
+			db.commit()
+		else:
+			db.execute('DELETE FROM coursefollowers WHERE userid=? AND courseid=?', [username, courseid])
+			db.commit()
+	except Error:
+		db.rollback()
+		error = "Invalid attempt!"
+		print error
+
+	return error
 
 
+def checkIfFollowing(courseid, username):
+	following = False
+	db = get_db()
 
+	checkCourse = formatQuery(courseid)
+
+	print "Checking if " + username + " follows course: " + checkCourse
+	try:
+		result = query_db('SELECT * FROM coursefollowers WHERE userid=(?) AND courseid=(?)', (username, checkCourse, ) , one=True)
+		print "Found: " + str(result)
+		if not result is None:
+			following = True
+
+	except IntegrityError:
+		db.rollback()
+
+	print "returning " + str(following)
+	return following
 
 
 

@@ -81,7 +81,9 @@ def coursepage(courseid):
     # If a valid course was entered, fetch the posts associated with it and render its page
     else:
         coursePosts = navigation.getCoursePosts(courseid)
-        return render_template("coursepg.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts)
+        isFollowing = navigation.checkIfFollowing(courseid, session['username'])
+
+        return render_template("coursepg.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts, following=isFollowing)
 
     return render_template("loggedin_home.html", username=session['username'])
 
@@ -121,14 +123,15 @@ def reviewspage(courseid):
 
 @app.route('/followcourse', methods=['GET', 'POST'])
 def followCourse():
-    print "ELLO"
+
     if request.method == 'POST':
         error = navigation.followCourseAttempt(request, session)
+        
         courseid = request.form['courseid']
         #print "Course name is: " + courseid
 
         # add error handling?
-        #return redirect(url_for('coursepage', courseid=courseid))
+        return redirect(url_for('coursepage', courseid=courseid))
 
     else:
         return render_template("loggedin_home.html", username=session['username'])
