@@ -61,8 +61,12 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/courses/<courseid>')
+@app.route('/courses/<courseid>/')
 def coursepage(courseid):
+    print "TESTTTTT"
+    print courseid
+    if not courseid.strip():
+        return render_template("loggedin_home.html", username=session['username'])
     #print "Course ID is = " + courseid
 
     # Lookup the database for the passed query
@@ -80,17 +84,6 @@ def coursepage(courseid):
         return render_template("coursepg.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts)
 
     return render_template("loggedin_home.html", username=session['username'])
-    
-    # posts = []
-    # post = {}
-    # post['user'] = 'xxx'
-    # post['post'] = "Does anyone know what textbook chapters we need for the midterm?"
-    # post['timestamp'] = datetime.date.today()
-    # posts.append(post)
-    # return render_template("coursepg.html", courseid=courseid, coursetitle="Principles of Web Development",
-    #     coursedesc='''Computer Science (Sci) : The course discusses the major principles, algorithms,
-    #     languages and technologies that underlie web development. Students receive practical 
-    #     hands-on experience through a project.''', posts=posts)
 
 
 @app.route('/addpost', methods=['GET', 'POST'])
@@ -106,6 +99,40 @@ def addPost():
         return redirect(url_for('coursepage', courseid=courseid))
 
     else:
-        return redirect(url_for('coursepage', courseid=courseid))
+        return render_template("loggedin_home.html", username=session['username'])
+
+
+@app.route('/courses/<courseid>/reviews')
+def reviewspage(courseid):
+    
+    courseInfo = navigation.getCourseInfo(courseid)
+
+    #print courseInfo
+
+    # If no course was found, return user to their main profile page
+    if not courseInfo:
+        return render_template("loggedin_home.html", username=session['username'])
+
+    # If a valid course was entered, fetch the posts associated with it and render its page
+    else:
+        coursePosts = navigation.getCoursePosts(courseid)
+        return render_template("reviews.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'])
+
+
+@app.route('/followcourse', methods=['GET', 'POST'])
+def followCourse():
+    print "ELLO"
+    if request.method == 'POST':
+        error = navigation.followCourseAttempt(request, session)
+        courseid = request.form['courseid']
+        #print "Course name is: " + courseid
+
+        # add error handling?
+        #return redirect(url_for('coursepage', courseid=courseid))
+
+    else:
+        return render_template("loggedin_home.html", username=session['username'])
+
+
 
 

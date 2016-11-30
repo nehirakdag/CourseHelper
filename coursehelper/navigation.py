@@ -47,18 +47,18 @@ def getCoursePosts(courseID):
 
 	if regexCheck(courseID):
 		query = formatQuery(courseID)
-		print "Asking for posts for course: " + query 
+		#print "Asking for posts for course: " + query 
 		
 		db = get_db()
 		db.row_factory = dict_factory
 
 		result = query_db('SELECT * FROM posts WHERE courseid = (?)', (query, ) , one=False)
 
-		print "Received: " + str(result)
+		#print "Received: " + str(result)
 
 		if not result is None:
 			for desc in result:
-				print "checking : " + str(desc)
+				#print "checking : " + str(desc)
 				coursePosts.append(desc)
 
 	return coursePosts
@@ -97,3 +97,15 @@ def addPostAttempt(request, session):
 		return error
 
 	return error
+
+
+def followCourseAttempt(request, session):
+	follow = request.form['followbtn']
+	print follow
+	return None
+
+
+
+
+
+
