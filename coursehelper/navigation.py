@@ -92,7 +92,9 @@ def checkValidReview(review):
 	return error
 
 def addPostAttempt(request, session):
+	print "hello from addPostAttempt"
 	post = request.form['post']
+	print "???"
 	courseid = formatQuery(request.form['courseid'])
 	print "Wants to add Post: " + post + " to Course : " + courseid
 
