@@ -40,7 +40,6 @@
          if( x.trim() == "") {
           return false;
          }
-
          var str1 = "/courses/";
          var query = str1.concat(x);
          // console.log(query);
@@ -84,12 +83,12 @@
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Course Feed</u></h3>
-                  <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><small> Add a post </small></h2>
+                  <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a post </h4>
                   <div class="panel-transp">
                   <form id="reg" method="post" class="form-horizontal" action="/addpost">
 
                     <div class="form-group">
-                      <input type="text" name="post" class="form-control input-lg" id="inputlg" class="form-control">
+                      <input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control">
                       <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
                     <div class="form-group">

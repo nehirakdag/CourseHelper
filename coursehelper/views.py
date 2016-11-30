@@ -66,7 +66,7 @@ def coursepage(courseid):
     print "TESTTTTT"
     print courseid
     if not courseid.strip():
-        return render_template("loggedin_home.html", username=session['username'])
+        return redirect(url_for('index'))
     #print "Course ID is = " + courseid
 
     # Lookup the database for the passed query
@@ -76,7 +76,7 @@ def coursepage(courseid):
 
     # If no course was found, return user to their main profile page
     if not courseInfo:
-        return render_template("loggedin_home.html", username=session['username'])
+        return redirect(url_for('index'))
 
     # If a valid course was entered, fetch the posts associated with it and render its page
     else:
@@ -85,7 +85,7 @@ def coursepage(courseid):
 
         return render_template("coursepg.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], posts=coursePosts, following=isFollowing)
 
-    return render_template("loggedin_home.html", username=session['username'])
+    return redirect(url_for('index'))
 
 
 @app.route('/addpost', methods=['GET', 'POST'])
@@ -101,7 +101,7 @@ def addPost():
         return redirect(url_for('coursepage', courseid=courseid))
 
     else:
-        return render_template("loggedin_home.html", username=session['username'])
+        return redirect(url_for('index'))
 
 
 @app.route('/courses/<courseid>/reviews')
@@ -113,7 +113,7 @@ def reviewspage(courseid):
 
     # If no course was found, return user to their main profile page
     if not courseInfo:
-        return render_template("loggedin_home.html", username=session['username'])
+        return redirect(url_for('index'))
 
     # If a valid course was entered, fetch the posts associated with it and render its page
     else:
@@ -134,8 +134,5 @@ def followCourse():
         return redirect(url_for('coursepage', courseid=courseid))
 
     else:
-        return render_template("loggedin_home.html", username=session['username'])
-
-
-
+        return redirect(url_for('index'))
 

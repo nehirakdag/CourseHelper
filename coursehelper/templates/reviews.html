@@ -20,7 +20,7 @@
             <a class="navbar-brand" href="/">CourseHelper</a>
         </div>
       <ul class="nav navbar-nav">
-        <li><a href="/courses/{{ courseid }}/">Course Feed </a></li>
+        <li><a href="/courses/{{courseid}}/">Course Feed </a></li>
         <li><a href="#">Resources</a></li>
         <li class="active"><a href="/reviews">Reviews<span class="sr-only">(current)</span></a></li>
       </ul>
@@ -42,9 +42,8 @@
       {
          var x = document.getElementById("searchtxt").value;
          if( x.trim() == "") {
-           return false;
+          return false;
          }
-
          var str1 = "/courses/";
          var query = str1.concat(x);
          // console.log(query);
@@ -77,14 +76,19 @@
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Reviews</u></h3>
-                  <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><small> Add a review - Let people know what you think of this course! Reviews are anonymous. </small></h2>
+                  <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a review - Let people know what you think of this course! Reviews are anonymous.</h4>
                   <div class="panel-transp">
                   <form id="reg" method="post" class="form-horizontal" action="/addreview">
 
                     <div class="form-group">
-                      <input type="text" name="post" class="form-control input-lg" id="inputlg" class="form-control">
-                      <input id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">
-                      <hr>
+                    <input id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs">
+                    <input id="input-21d" value="4" type="number" class="rating" data-size="xs" readonly="true">
+                     </div>
+                      <!--<input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control" placeholder="Your review goes here!">-->
+
+                      <!-- <div class="col-md-6"> -->
+                          <textarea class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
+                      <!-- </div> -->
                       <input type="hidden" name="courseid" value="{{ courseid }}">
                     </div>
                     <div class="form-group">

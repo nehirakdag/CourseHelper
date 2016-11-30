@@ -10,6 +10,9 @@
       function OnSubmitForm()
       {
          var search = document.getElementById("searchtxt");
+         if( x.trim() == "") {
+ +          return false;
+ +         }
          var str1 = "/courses/";
          document.searchform.action = str1.concat(search,"/");
          return true;
@@ -24,7 +27,7 @@
             <!--<a class="navbar-brand" href="#">
             <img alt="Brand" src="{{ url_for('static',filename='img/letter-C-blue-icon.png') }}">
             </a>-->
-            <a class="navbar-brand" href="#">CourseHelper</a>
+            <a class="navbar-brand" href="/">CourseHelper</a>
         </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
@@ -50,7 +53,6 @@
          if( x.trim() == "") {
           return false;
          }
-         
          var str1 = "/courses/";
          var query = str1.concat(x);
          // console.log(query);
