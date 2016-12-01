@@ -161,23 +161,6 @@ def checkIfFollowing(courseid, username):
 	return following
 
 
-def getCoursesFollowed(username):
-	coursesFollowed = []
-	db = get_db()
-	db.row_factory = dict_factory
-
-	#print "Checking the courses user: " + username + " follows"
-	
-	coursesFound = query_db('SELECT * FROM coursefollowers WHERE userid = (?)', (username, ) , one=False)
-
-	if not coursesFound is None:
-			for course in coursesFound:
-				coursesFollowed.append(course)
-
-	#print "returning: " + str(convertToString(coursesFollowed))
-	return coursesFollowed
-
-
 def addReviewAttempt(request, session):
 	review = request.form['review']
 	courseid = formatQuery(request.form['courseid'])
@@ -192,7 +175,7 @@ def addReviewAttempt(request, session):
 	username = session['username']
 	timestamp = datetime.datetime.now().strftime("%H:%M %Y-%m-%d")
 	stars = request.form['stars']
-	#print "Stars is : " + str(stars)
+	print "Stars is : " + str(stars)
 
 	db = get_db()
 
@@ -221,7 +204,7 @@ def getCourseReviews(courseID):
 
 		result = query_db('SELECT * FROM reviews WHERE courseid = (?)', (query, ) , one=False)
 
-		#print "Received: " + str(result)
+		print "Received: " + str(result)
 
 		if not result is None:
 			for desc in result:

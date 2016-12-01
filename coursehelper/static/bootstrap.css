@@ -3101,6 +3101,10 @@ select[multiple].input-lg {
   border: 1px solid transparent;
   border-radius: 4px;
 }
+.btn-no-outline {
+  border: 1px solid transparent;
+  background-color: transparent;
+}
 .btn:focus,
 .btn:active:focus,
 .btn.active:focus,
@@ -5552,10 +5556,10 @@ button.list-group-item-danger.active:focus {
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 .panel-small {
-  margin-bottom: 20px;
-  background-color: transparent;
-  border: 1px solid white;
-  border-radius: 0px;
+  margin-bottom: 15px;
+  background-color: rgba(225, 225, 225, 0.6);
+  border: 1px solid transparent;
+  border-radius: 6px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }

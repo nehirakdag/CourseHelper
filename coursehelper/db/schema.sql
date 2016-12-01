@@ -24,6 +24,12 @@ CREATE TABLE coursefollowers (
 	courseid TEXT NOT NULL,
 	PRIMARY KEY(userid, courseid)
 );
+DROP TABLE IF EXISTS userfollowers;
+CREATE TABLE userfollowers (
+	userid TEXT NOT NULL,
+	followeduser TEXT NOT NULL,
+	PRIMARY KEY(userid, followeduser)
+);
 DROP TABLE IF EXISTS posts;
 CREATE TABLE posts (
 	postid INTEGER PRIMARY KEY AUTOINCREMENT,

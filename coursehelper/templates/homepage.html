@@ -18,21 +18,20 @@
             <a class="navbar-brand" href="/">CourseHelper</a>
         </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
+        <li class="active"><a href="#"> Home <span class="sr-only">(current)</span></a></li>
         </ul>
         <form id="searchform" class="navbar-form" role="search" onsubmit="return onSubmitSearch()">
         <div class="form-group" style="display: inline;">
-          <input type="text"  id="searchtxt" class="form-control" placeholder="Search">
+          <input type="text"  id="searchtxt" class="form-control" size="35" placeholder="Search for courses or users">
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
         </form>
-        <form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
+        <!--<form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
         <div class="form-group" style="display: inline;">
           <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
-        </form>
+        </form>-->
       <form class="navbar-form navbar-right" role="logout" action="/logout">
         <div class="form-group">
           <button type="submit" class="btn-orig btn-default">Logout </button>
@@ -66,33 +65,22 @@
          return true;
         }
     </script>
-    <div class="body-container">
-      <div class="container-fluid">
+
+      <div class="body-container">
+      <div class="container-fluid-cr">
         <div class="row-fluid">
-          <div class="centering text-center">
-            <div class="panel">
-              <div class="panel-body">
-                <h2> Welcome, {{username}} </h2>
-                {% if courses %}
-                Here are the courses you're following:
-                <ul>
-                {% for course in courses %}
-                <li> <a href="/courses/{{course.courseid}}"> {{course.courseid}} </a></li>
-                {% endfor %}
-                {% else %}
-                <br>
-                You aren't currently following any courses. 
-                {% endif %}
-                </ul>
-                </div>
-                <!--<form id="logout" method="get" class="form-horizontal" action="/logout">
-                  <div class="form-group">
-                    <input type="submit" value="Logout">
-                  </div>
-                </form>-->
-              </div>
-            </div>
-          </div>
+            <h1> Welcome, {{ username }} </h1>
+            {% if courses %}
+            <h3> Here are the courses you're following: </h3>
+            <ul class="list-group col-md-4">
+            {% for course in courses %}
+              <a href="/courses/{{ course.courseid }}" class="list-group-item list-group-item-action"> {{ course.courseid }}</a>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You aren't currently following any courses. You can follow a course by visiting the course page and they will appear on your home screen.</h3>
+            {% endif %}
         </div>
       </div>
     </body>
+

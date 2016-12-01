@@ -26,12 +26,12 @@
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
         </form>
-        <form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
+        <!--<form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
         <div class="form-group" style="display: inline;">
           <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
-        </form>
+        </form>-->
       <form class="navbar-form navbar-right" role="logout" action="/logout">
         <div class="form-group">
           <button type="submit" class="btn-orig btn-default">Logout </button>
@@ -108,8 +108,10 @@
                   <form id="reg" method="post" class="form-horizontal" action="/addpost">
 
                     <div class="form-group">
+                      <div class="col-md-8">
                       <textarea name="post" class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
                       <input type="hidden" name="courseid" value="{{ courseid }}">
+                      </div>
                     </div>
                     <div class="form-group">
                       <input type="submit" class="btn btn-transp" value="Submit">
@@ -128,7 +130,7 @@
                      <div class="form-group">
                      <input type="hidden" name="postid" value="{{ post.postid }}">
                      <input type="hidden" name="courseid" value="{{ courseid }}">
-                     <input type="submit" class="btn-orig btn-warning btn-sm" value="Delete">
+                     <button type="submit" value="Delete" class=" btn btn-transp"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                      </div>
                      </form>
                     {% endif %}

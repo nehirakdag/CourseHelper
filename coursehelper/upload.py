@@ -70,7 +70,7 @@ def writeFileLinkToDatabase(request, session, path):
 	title = request.form['title']
 	url = path
 	desc = request.form['desc']
-	timestamp = datetime.datetime.now()
+	timestamp = datetime.datetime.now().strftime("%H:%M %Y-%m-%d")
 
 	db = get_db()
 
@@ -88,9 +88,4 @@ def writeFileLinkToDatabase(request, session, path):
 		return False
 
 	return True
-
-	
-
-
-
 

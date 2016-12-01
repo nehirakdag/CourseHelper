@@ -30,12 +30,12 @@
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
         </form>
-        <form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
+        <!--<form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
         <div class="form-group" style="display: inline;">
           <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
-        </form>
+        </form>-->
       <form class="navbar-form navbar-right" role="logout" action="/logout">
         <div class="form-group">
           <button type="submit" class="btn-orig btn-default">Logout </button>
@@ -104,45 +104,49 @@
               </div>
             </form>
             {% endif %}
+            <hr>
             <br>
             <div class="panel">
               <div class="panel-body">
-                <h3><u>Reviews</u></h3>
                   <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a review - Let people know what you think of this course! Reviews are anonymous.</h4>
                   <div class="panel-transp">
                   <form id="reg" method="post" class="form-horizontal" action="/addreview">
 
                     <div class="form-group">
-                    <input name="stars" id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=1>
+                    <input name="stars" id="input-21d" value="2" type="number" class="rating" min=0 max=5 step=1 data-size="xs">
                     <!-- <input id="input-21d" value="4" type="number" class="rating" data-size="xs" readonly="true"> -->
                      </div>
                       <!--<input type="text" name="post" class="form-control input-sm" id="inputlg" class="form-control" placeholder="Your review goes here!">-->
-
-                      <!-- <div class="col-md-6"> -->
+                      <div class="form-group">
+                      <div class="col-md-8">
                           <textarea name="review" class="form-control" rows="3" placeholder="Your review goes here!" required></textarea>
-                      <!-- </div> -->
                       <input type="hidden" name="courseid" value="{{ courseid }}">
-                    </div>
+                      </div>
+                      </div>
+                    <br>
                     <div class="form-group">
+                      
                       <input type="submit" class="btn btn-transp" value="Submit">
                     </div>
 
                     </form>
                     </div>
+                <hr>
+                <h3><u>Reviews</u></h3>    
                 {% for review in reviews %}
                 <div class="panel-small">
                   <div class="panel-body">
-                    <h4>{{ review.review }}<br>
-                      {% if review.stars != 0 %}
-                      <input name="stars" id="input-21d" value="{{review.stars}}" type="number" class="rating" data-size="xs" data-show-clear="false" data-display-only="true">
+                  {% if review.stars != 0 %}
+                      <input name="stars" id="input-21d" value="{{review.stars}}" type="number" class="rating" data-size="xs" data-show-clear="false" data-display-only="true" data-size="xs">
                     {% endif %}
+                    <h4>{{ review.review }}<br>
                       <small>{{ review.tstamp }}</small></h4>
                     {% if viewer == review.userid %}
                     <form name="delete" action="/deletereview" method="post">
                      <div class="form-group">
                      <input type="hidden" name="reviewid" value="{{ review.reviewid }}">
                      <input type="hidden" name="courseid" value="{{ courseid }}">
-                     <input type="submit" class="btn-orig btn-warning btn-sm" value="Delete">
+                     <button type="submit" value="Delete" class=" btn btn-no-outline"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                      </div>
                      </form>
                     {% endif %}

@@ -1,7 +1,7 @@
 import registerlogin
 import navigation
-import datetime
 import upload
+import profiles
 
 from coursehelper import app
 from flask import redirect, render_template, url_for, abort, flash, request, session
@@ -11,8 +11,14 @@ from flask import redirect, render_template, url_for, abort, flash, request, ses
 def index():
     if session.get('logged_in'):
         username = session['username']
-        coursesFollowed = navigation.getCoursesFollowed(username)
-        return render_template("homepage.html", username=username, courses=coursesFollowed)
+
+        coursesFollowed = profiles.getCoursesFollowed(username)
+        userPosts = profiles.getUserPosts(username)
+        userReviews = profiles.getUserReviews(username)
+        userResources = profiles.getUserResources(username)
+        followedUsers = profiles.getFollowedUsers(username)
+
+        return render_template("homepage.html", username=username, courses=coursesFollowed, posts=userPosts, reviews=userReviews, resources=userResources)
 
     return render_template("index.html")
 
@@ -74,6 +80,9 @@ def coursepage(courseid):
 
     # If no course was found, return user to their main profile page
     if not courseInfo or not session.get('logged_in'):
+        #check if this is a user instead:
+        if navigation.checkIfUserExists(courseid):
+            return redirect(url_for('profilePage', userid=courseid))
         return redirect(url_for('index'))
 
     # If a valid course was entered, fetch the posts associated with it and render its page
@@ -134,6 +143,19 @@ def followCourse():
         return redirect(url_for('index'))
 
 
+@app.route('/followuser', methods=['GET', 'POST'])
+def followUser():
+
+    if request.method == 'POST' and session.get('logged_in'):
+        error = profiles.followUserAttempt(request, session)
+        #profile = request.form['profile']
+
+        #return redirect(url_for('profilePage', userid=profile))
+        return redirect(url_for('profilePage', userid=session['username']))
+    else:
+        return redirect(url_for('index'))
+
+
 @app.route('/addreview', methods=['GET', 'POST'])
 def addReview():
 
@@ -154,12 +176,18 @@ def profilePage(userid):
 
     # Viewer must be logged in to attempt to view a profile
     if session.get('logged_in') and navigation.checkIfUserExists(userid):
-        coursesFollowed = navigation.getCoursesFollowed(userid)
 
         if session['username'] == userid:
             return redirect(url_for('index'))
         else:
-            return render_template("profile.html", username=userid, courses=coursesFollowed)
+
+            coursesFollowed = profiles.getCoursesFollowed(userid)
+            userPosts = profiles.getUserPosts(userid)
+            #userReviews = profiles.getUserReviews(username)
+            userResources = profiles.getUserResources(userid)
+            followedUsers = profiles.getFollowedUsers(userid)
+            
+            return render_template("profile.html", username=userid, courses=coursesFollowed, posts=userPosts, resources=userResources)
 
     return redirect(url_for('index'))
 
