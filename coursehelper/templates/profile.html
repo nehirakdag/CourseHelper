@@ -52,6 +52,17 @@
       </div>
   </nav>
        <script type="text/javascript">
+
+        function toggleFollow() {
+          if (document.getElementById("followbtn").value=="Follow this user") {
+            document.getElementById("followbtn").className = "btn-orig btn-sm btn-danger";
+            document.getElementById("followbtn").value = "Unfollow this user";
+          } else {
+            document.getElementById("followbtn").className = "btn-orig btn-sm btn-success";
+            document.getElementById("followbtn").value = "Follow this user";
+          }
+          return true;
+        }
       function onSubmitSearch()
       {
          var x = document.getElementById("searchtxt").value;
@@ -82,6 +93,26 @@
       <div class="container-fluid-cr">
         <div class="row-fluid">
             <h1><u> This is {{ username}}'s profile page </u></h1>
+
+            {% if following==True %}
+             <form name="followform" action="/followuser" method="post">
+              <div class="form-group">
+                <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this user" id="followbtn" onclick="toggleFollow()">
+                <input type="hidden" name="followeduser" value="{{ username }}">
+                <input type="hidden" name="wantstofollow" value="false">
+              </div>
+            </form>
+            {% else %}
+            <form name="followform" action="/followuser" method="post">
+              <div class="form-group">
+                <input type="submit" class="btn-orig btn-success btn-sm" value="Follow this user" id="followbtn" onclick="toggleFollow()">
+                <input type="hidden" name="followeduser" value="{{ username }}">
+                <input type="hidden" name="wantstofollow" value="true">
+              </div>
+            </form>
+            {% endif %}
+            <br>
+
             {% if courses %}
             <h3> Here are the courses {{ username }} is following: </h3>
             <ul class="list-group col-md-4">

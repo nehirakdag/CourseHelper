@@ -1,6 +1,10 @@
+import yaml
+import datetime
+import sqlite3
+import collections
 from database import get_db, query_db
 from sqlite3 import IntegrityError, Row
-from navigation import dict_factory
+from navigation import dict_factory, formatQuery
 
 def getCoursesFollowed(username):
 	coursesFollowed = []
@@ -89,7 +93,7 @@ def getFollowedUsers(username):
 
 def followUserAttempt(request, session):
 	follow = request.form['wantstofollow']
-	followedUser = formatQuery(request.form['followeduser'])
+	followedUser = request.form['followeduser']
 	username = session['username']
 
 	error = None

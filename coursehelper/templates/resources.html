@@ -104,28 +104,35 @@
             <div class="panel">
               <div class="panel-body">
                 <h3><u>Resources</u></h3>
-                  <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a resource - notes and other relevant documents are welcome!</h4>
+                  <h4><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a resource - notes and other relevant documents are welcome!</h4><br>
                   <form action="/uploadresource" method="post" enctype=multipart/form-data>
                      <label class="file">
                         <input type=file name="file[]" id="file" multiple>
-                        <input type="text" name="title" class="form-control" placeholder="Title" required>
-                        <input type="text" name="desc" class="form-control" placeholder="Description">
+                        <br>
+                        <input type="text" name="title" class="form-control" placeholder="Document Title" required>
+                        <br>
+                        <input type="text" name="desc" class="form-control" placeholder="Document Description (optional)">
                         <input type="hidden" name="courseid" value="{{ courseid }}">
                            <span class="file-custom"></span><br>
                      </label>
                      {% if error %}
                      <font color="red"> {{ error }} </font><br><br>
                      {% endif %}
+                     <br>
                      <input type="submit" value="Upload" class="btn btn-primary">  
                   </form>
                   <hr>
               <h3> Available resources: </h3>
-              <ul>
+              <!--<ul>-->
               {% for resource in resources %}
-               <li> <a href="http://file:///{{ resource.url }}"> {{ resource.title }} </a>
+              <div class="panel-small">
+                  <div class="panel-body">
+               <!--<li>--> <a href="http://file:///{{ resource.url }}"> {{ resource.title }} </a>
                 {% if resource.description %}
-                <p> {{resource.description}} </li>
+                  <br>{{resource.description}}
                   {% endif %}
+                </div>
+                </div>
               {% endfor %}
               </ul>
             </div>

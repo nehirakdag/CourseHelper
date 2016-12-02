@@ -63,10 +63,12 @@ template {
 }
 a {
   background-color: transparent;
+  color: #a3d0e0;
 }
 a:active,
 a:hover {
   outline: 0;
+  color: #a3d0e0;
 }
 abbr[title] {
   border-bottom: 1px dotted;
@@ -4964,6 +4966,7 @@ a.label:focus {
 .label-default[href]:hover,
 .label-default[href]:focus {
   background-color: #5e5e5e;
+
 }
 .label-primary {
   background-color: #337ab7;
@@ -5343,6 +5346,7 @@ a.thumbnail.active {
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid #ddd;
+  color: black;
 }
 .list-group-item:first-child {
   border-top-left-radius: 4px;
@@ -5557,11 +5561,15 @@ button.list-group-item-danger.active:focus {
 }
 .panel-small {
   margin-bottom: 15px;
-  background-color: rgba(225, 225, 225, 0.6);
+  background-color: rgba(200, 200, 200, 0.5);
   border: 1px solid transparent;
   border-radius: 6px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-small a {
+  color: #a3d0e0;
 }
 .panel-body {
   padding: 15px;

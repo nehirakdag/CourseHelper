@@ -68,11 +68,14 @@
 
       <div class="body-container">
       <div class="container-fluid-cr">
-        <div class="row-fluid">
+        <!--<div class="row-fluid">-->
             <h1> Welcome, {{ username }} </h1>
+            <div class="row">
+
+            <div class="col-md-4">
             {% if courses %}
-            <h3> Here are the courses you're following: </h3>
-            <ul class="list-group col-md-4">
+            <h3> Your courses: </h3>
+            <ul class="list-group">
             {% for course in courses %}
               <a href="/courses/{{ course.courseid }}" class="list-group-item list-group-item-action"> {{ course.courseid }}</a>
             {% endfor %}
@@ -80,7 +83,68 @@
             {% else %}
             <h3> You aren't currently following any courses. You can follow a course by visiting the course page and they will appear on your home screen.</h3>
             {% endif %}
+            </div>
+
+ 
+            <div class="col-md-4">
+            {% if followedusers %}
+            <h3> Friends list: </h3>
+            <ul class="list-group">
+            {% for user in followedusers %}
+              <a href="/profiles/{{ user.followeduser }}/" class="list-group-item list-group-item-action"> {{ user.followeduser }}</a>
+            {% endfor %}
+            </ul>
+            {% else %}
+
+            <h3> You aren't currently following anybody - use the search bar to find people to follow. </h3>
+
+            {% endif %}
+            </div>
+            
+            <div class="col-md-4">
+            {% if posts %}
+            <h3> Your posts: </h3>
+            <ul class="list-group">
+            {% for post in posts %}
+              <li class="list-group-item list-group-item-action"> {{ post.post }} - {{ post.courseid }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any posts yet.</h3>
+            {% endif %}
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-md-4">
+            {% if reviews %}
+            <h3> Your reviews: </h3>
+            <ul class="list-group">
+            {% for review in reviews %}
+              <li class="list-group-item list-group-item-action"> {{ review.review }} - {{ review.courseid }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any reviews yet.</h3>
+            {% endif %}
+            </div>
+
+            <!--<div class="col-md-4">
+            {% if resources %}
+            <h3> Your resources: </h3>
+            <ul class="list-group">
+            {% for resource in resources %}
+              <li class="list-group-item list-group-item-action"> {{ resource.title }} 
+              {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <h3> You haven't written any reviews yet.</h3>
+            {% endif %}
+            </div>-->
+          </div>
+
+          </div>
         </div>
-      </div>
     </body>
 

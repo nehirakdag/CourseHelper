@@ -30,12 +30,7 @@
         </div>
           <button type="submit" class="btn-orig btn-default">Submit</button>
         </form>
-        <!--<form id="searchuserform" class="navbar-form" role="search" onsubmit="return onSubmitSearchUser()">
-        <div class="form-group" style="display: inline;">
-          <input type="text"  id="searchusertxt" class="form-control" placeholder="Search for Users">
-        </div>
-          <button type="submit" class="btn-orig btn-default">Submit</button>
-        </form>-->
+
       <form class="navbar-form navbar-right" role="logout" action="/logout">
         <div class="form-group">
           <button type="submit" class="btn-orig btn-default">Logout </button>
@@ -132,7 +127,11 @@
                     </form>
                     </div>
                 <hr>
-                <h3><u>Reviews</u></h3>    
+                {% if not reviews %}    
+                <h4> Be the first to write a review for this course! </h4>
+                {% else %}
+                <h3><u>Reviews</u></h3>
+                {% endif %}    
                 {% for review in reviews %}
                 <div class="panel-small">
                   <div class="panel-body">

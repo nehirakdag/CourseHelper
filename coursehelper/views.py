@@ -18,7 +18,7 @@ def index():
         userResources = profiles.getUserResources(username)
         followedUsers = profiles.getFollowedUsers(username)
 
-        return render_template("homepage.html", username=username, courses=coursesFollowed, posts=userPosts, reviews=userReviews, resources=userResources)
+        return render_template("homepage.html", username=username, courses=coursesFollowed, posts=userPosts, reviews=userReviews, resources=userResources, followedusers=followedUsers)
 
     return render_template("index.html")
 

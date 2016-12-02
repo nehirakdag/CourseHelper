@@ -114,12 +114,18 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <input type="submit" class="btn btn-transp" value="Submit">
+                      &nbsp &nbsp<input type="submit" class="btn btn-transp" value="Submit">
                     </div>
 
 
                     </form>
                     </div>
+                <hr>
+                {% if not posts %}    
+                <h4> Be the first to write a review for this course! </h4>
+                {% else %}
+                <h3><u>Posts</u></h3>
+                {% endif %}   
                 {% for post in posts %}
                 <div class="panel-small">
                   <div class="panel-body">
