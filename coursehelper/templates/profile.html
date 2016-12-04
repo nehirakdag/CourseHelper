@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>IDK</title>
+    <title>CourseHelper</title>
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
 
@@ -91,10 +91,10 @@
 
       <div class="body-container">
       <div class="container-fluid-cr">
-        <div class="row-fluid">
-            <h1><u> This is {{ username}}'s profile page </u></h1>
-
-            {% if following==True %}
+        <!--<div class="row-fluid">-->
+            <h1> Profile page of user: {{ username }} </h1>
+            
+             {% if following==True %}
              <form name="followform" action="/followuser" method="post">
               <div class="form-group">
                 <input type="submit" class="btn-orig btn-danger btn-sm" value="Unfollow this user" id="followbtn" onclick="toggleFollow()">
@@ -113,16 +113,59 @@
             {% endif %}
             <br>
 
+            <div class="row">
+
+            <div class="col-md-4">
             {% if courses %}
-            <h3> Here are the courses {{ username }} is following: </h3>
-            <ul class="list-group col-md-4">
+            <h4> Courses Followed: </h4>
+            <ul class="list-group">
             {% for course in courses %}
               <a href="/courses/{{ course.courseid }}" class="list-group-item list-group-item-action"> {{ course.courseid }}</a>
             {% endfor %}
-            </ul>
             {% else %}
-            <h3> This user isn't following any courses. </h3>
+            <h4> This user is not following any courses. </h4>
+            </ul>
+             {% endif %}
+            </div>
+
+            {% if followedusers %}
+            <div class="col-md-4">
+            <h4> Friends list: </h4>
+            <ul class="list-group">
+            {% for user in followedusers %}
+              <a href="/profiles/{{ user.followeduser }}/" class="list-group-item list-group-item-action"> {{ user.followeduser }}</a>
+            {% endfor %}
+            </ul>
+            </div>
             {% endif %}
-        </div>
+            </div>
+            
+            <div class="row">
+
+            {% if posts %}
+            <div class="col-md-4">
+            <h4> Posts: </h4>
+            <ul class="list-group">
+            {% for post in posts %}
+              <a href="/courses/{{ post.courseid }}/" class="list-group-item list-group-item-action"> {{ post.post }} - {{ post.courseid }}</a>
+            {% endfor %}
+            </ul>
+            </div>
+            {% endif %}
+
+            {% if resources %}
+            <div class="col-md-4">
+            <h4> Uploaded resources: </h4>
+            <ul class="list-group">
+            {% for resource in resources %}
+              <a href="/courses/{{resource.courseid}}/resources" class="list-group-item list-group-item-action"> {{ resource.title }} 
+              {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </a>
+            {% endfor %}
+            </ul>
+            </div>
+            {% endif %}
+          </div>
+
+          </div>
       </div>
     </body>

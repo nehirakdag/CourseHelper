@@ -276,4 +276,36 @@ def getCourseResources(courseid):
 	return resources
 
 
+def getSearchSuggestions(request):
+	search = request.args.get('q')
+
+	db = get_db()
+	db.row_factory = dict_factory
+
+	searchResults = query_db("SELECT * FROM courses WHERE courseid LIKE '%" +(search)+ "%'" , () , one=False)
+	
+	foundList = []
+	i = 0
+
+	#print str(searchResults)
+
+	if searchResults is not None:
+		for course in searchResults:
+			courseInfo = yaml.safe_load(course['description'])
+
+			#print courseInfo
+			
+			courseDict = {}
+			courseDict['name'] = courseInfo['name']
+			courseDict['title'] = courseInfo['title']
+
+			foundList.append(courseDict)
+
+			i = i + 1
+
+	if i > 5:
+		foundList = foundList[:5]
+
+	print foundList
+	return foundList
 

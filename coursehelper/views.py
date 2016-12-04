@@ -4,7 +4,7 @@ import upload
 import profiles
 
 from coursehelper import app
-from flask import redirect, render_template, url_for, abort, flash, request, session
+from flask import redirect, render_template, url_for, abort, flash, request, session, jsonify
 
 
 @app.route('/')
@@ -259,6 +259,19 @@ def uploadResource():
 
     return redirect(url_for('index'))
 
+@app.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    results = navigation.getSearchSuggestions(request)
+    return jsonify(matching_results=results)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(500)
+def page_not_found(e):
+    print "INTERNAL SERVER ERROR!!!!"
+    return redirect(url_for('index'))
 

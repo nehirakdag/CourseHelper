@@ -2,6 +2,7 @@ import os
 import re
 import database
 import yaml
+import json
 
 def putCoursesToDB():
 	current = os.path.dirname(os.path.abspath(__file__))
@@ -42,9 +43,11 @@ def putCoursesToDB():
 				if keyToStore != previous:
 					i = i + 1
 					#print str(courseJSON).decode('utf-8')
-					print str(courseJSON).replace('\'', '"')
+					#print str(courseJSON)
+					#print json.loads(str(courseJSON))
+					print line
 					db = database.get_db()
-					db.execute('INSERT INTO courses (courseid, description) VALUES (?, ?)', [keyToStore , str(courseJSON).replace('\'', '"')])
+					db.execute('INSERT INTO courses (courseid, description) VALUES (?, ?)', [keyToStore , line])
 	        		db.commit()
 
 	        		uploadFolder = uploads + keyToStore

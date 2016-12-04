@@ -2,9 +2,37 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>IDK</title>
+    <title>CourseHelper</title>
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='bootstrap.css') }}">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='user-reg.css') }}">
+    
+    <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+    <script type="text/javascript">
+    // $(function() {
+    //     $("#searchtxt").autocomplete({
+    //         source:function(request, response) {
+    //             $.getJSON("{{url_for('autocomplete')}}",{
+    //                 q: request.term, // in flask, "q" will be the argument to look for using request.args
+    //             }, function(data) {
+    //                 response(data.matching_results); // matching_results from jsonify
+    //             });
+    //         },
+    //         minLength: 2,
+    //         autoFocus: true,
+    //         select: function(event, ui) {
+    //             console.log(ui.item.value); // not in your question, but might help later
+    //         },
+    //         messages: {
+    //           noResults: '',
+    //           results: function() {}
+    //         },
+    //     }).focus(function() {
+    //       $(this).autocomplete("search", "")
+    //       console.log($(this).val())
+    //     });
+    // })
+    // </script>
 
   </head>
   <body>
@@ -74,21 +102,21 @@
 
             <div class="col-md-4">
             {% if courses %}
-            <h3> Your courses: </h3>
+            <h4> Your courses: </h4>
             <ul class="list-group">
             {% for course in courses %}
               <a href="/courses/{{ course.courseid }}" class="list-group-item list-group-item-action"> {{ course.courseid }}</a>
             {% endfor %}
             </ul>
             {% else %}
-            <h3> You aren't currently following any courses. You can follow a course by visiting the course page and they will appear on your home screen.</h3>
+            <h4> You aren't currently following any courses. You can follow a course by visiting the course page and they will appear on your home screen.</h4>
             {% endif %}
             </div>
 
  
             <div class="col-md-4">
             {% if followedusers %}
-            <h3> Friends list: </h3>
+            <h4> Friends list: </h4>
             <ul class="list-group">
             {% for user in followedusers %}
               <a href="/profiles/{{ user.followeduser }}/" class="list-group-item list-group-item-action"> {{ user.followeduser }}</a>
@@ -96,21 +124,21 @@
             </ul>
             {% else %}
 
-            <h3> You aren't currently following anybody - use the search bar to find people to follow. </h3>
+            <h4> You aren't currently following anybody - use the search bar to find people to follow. </h4>
 
             {% endif %}
             </div>
             
             <div class="col-md-4">
             {% if posts %}
-            <h3> Your posts: </h3>
+            <h4> Your posts: </h4>
             <ul class="list-group">
             {% for post in posts %}
-              <li class="list-group-item list-group-item-action"> {{ post.post }} - {{ post.courseid }}</li>
+              <a href="/courses/{{ post.courseid }}/" class="list-group-item list-group-item-action"> {{ post.post }} - {{ post.courseid }}</a>
             {% endfor %}
             </ul>
             {% else %}
-            <h3> You haven't written any posts yet.</h3>
+            <h4> You haven't written any posts yet.</h4>
             {% endif %}
             </div>
           </div>
@@ -118,28 +146,28 @@
           <div class="row">
           <div class="col-md-4">
             {% if reviews %}
-            <h3> Your reviews: </h3>
+            <h4> Your reviews: </h4>
             <ul class="list-group">
             {% for review in reviews %}
-              <li class="list-group-item list-group-item-action"> {{ review.review }} - {{ review.courseid }}</li>
+              <a href="/courses/{{review.courseid}}/reviews" class="list-group-item list-group-item-action"> {{ review.review }} - {{ review.courseid }}</a>
             {% endfor %}
             </ul>
             {% else %}
-            <h3> You haven't written any reviews yet.</h3>
+            <h4> You haven't written any reviews yet.</h4>
             {% endif %}
             </div>
 
             <div class="col-md-4">
             {% if resources %}
-            <h3> Your resources: </h3>
+            <h4> Your resources: </h4>
             <ul class="list-group">
             {% for resource in resources %}
-              <li class="list-group-item list-group-item-action"> {{ resource.title }} 
-              {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </li>
+              <a href="/courses/{{resource.courseid}}/resources" class="list-group-item list-group-item-action"> {{ resource.title }} 
+              {% if resource.description %}: {{ resource.description }} {% endif %} - {{ resource.courseid }} </a>
             {% endfor %}
             </ul>
             {% else %}
-            <h3> You haven't written any resources yet.</h3>
+            <h4> You haven't written any resources yet.</h4>
             {% endif %}
             </div>
           </div>
