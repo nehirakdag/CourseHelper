@@ -261,11 +261,12 @@ def deleteReviewAttempt(request, session):
 
 
 def getCourseResources(courseid):
+	query = formatQuery(courseid)
 
 	db = get_db()
 	db.row_factory = dict_factory
 
-	resources = query_db('SELECT * FROM resources WHERE courseid = (?)', (courseid, ) , one=False)
+	resources = query_db('SELECT * FROM resources WHERE courseid = (?)', (query, ) , one=False)
 
 	if resources is None:
 		resources = {}

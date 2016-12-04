@@ -114,3 +114,19 @@ def followUserAttempt(request, session):
 
 	return error
 
+
+def checkIfFollowing(followedUser, username):
+	following = False
+	db = get_db()
+
+	#print "Checking if " + username + " follows course: " + checkCourse
+	try:
+		result = query_db('SELECT * FROM userfollowers WHERE userid=(?) AND followeduser=(?)', (username, followedUser, ) , one=True)
+		#print "Found: " + str(result)
+		if not result is None:
+			following = True
+
+	except IntegrityError:
+		db.rollback()
+
+	return following

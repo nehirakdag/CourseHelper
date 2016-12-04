@@ -148,10 +148,10 @@ def followUser():
 
     if request.method == 'POST' and session.get('logged_in'):
         error = profiles.followUserAttempt(request, session)
-        #profile = request.form['profile']
+        profile = request.form['followeduser']
 
-        #return redirect(url_for('profilePage', userid=profile))
-        return redirect(url_for('profilePage', userid=session['username']))
+        return redirect(url_for('profilePage', userid=profile))
+        #return redirect(url_for('profilePage', userid=session['username']))
     else:
         return redirect(url_for('index'))
 
@@ -186,8 +186,9 @@ def profilePage(userid):
             #userReviews = profiles.getUserReviews(username)
             userResources = profiles.getUserResources(userid)
             followedUsers = profiles.getFollowedUsers(userid)
+            isFollowing = profiles.checkIfFollowing(userid, session['username'])
             
-            return render_template("profile.html", username=userid, courses=coursesFollowed, posts=userPosts, resources=userResources)
+            return render_template("profile.html", username=userid, courses=coursesFollowed, posts=userPosts, resources=userResources, following=isFollowing)
 
     return redirect(url_for('index'))
 
@@ -236,6 +237,7 @@ def resourcespage(courseid):
     # If a valid resource was entered, fetch the components associated with it and render its page
     else:
         courseResources = navigation.getCourseResources(courseid)
+        print courseResources
         isFollowing = navigation.checkIfFollowing(courseid, session['username'])
         return render_template("resources.html", courseid=courseInfo['name'], coursetitle=courseInfo['title'], coursedesc=courseInfo['description'], resources=courseResources, following=isFollowing)
 
