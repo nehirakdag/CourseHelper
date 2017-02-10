@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 Bootstrap(app)
 
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
+UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) + '/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
