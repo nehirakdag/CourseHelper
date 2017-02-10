@@ -1,7 +1,7 @@
 # CourseHelper
 As an online platform for McGill students to come together and discuss their course experiences, CourseHelper allows its users to rate McGill courses, publish notes and other resources to the site, and interact with other students in their courses.
 
-![alt-text]()
+![alt-text](https://github.com/nehirakdag/CourseHelper/blob/master/Images/login.png)
 
 # Implementation
 CourseHelper is built with the Flask framework of Python. It uses the following technologies: SQLite, Jinja2, HTML/CSS, Bootstrap and Javascript.
@@ -14,5 +14,15 @@ List of McGill University Courses: [Click Here](http://www.mcgill.ca/study/2016-
 ### Dynamic Rendering
 * Using Jinja2 template HTML pages, specific search queries to the SQLite database yield appropriate webpages, where users can leave course reviews and comments, rate courses or upload resources to be shared with others.
 
+![alt-text](https://github.com/nehirakdag/CourseHelper/blob/master/Images/courseFeed.png)
+
+![alt-text](https://github.com/nehirakdag/CourseHelper/blob/master/Images/reviews.png)
+
+![alt-text](https://github.com/nehirakdag/CourseHelper/blob/master/Images/resources.png)
+
 ### A Social Network
 * Users can follow their current or favorite courses, follow other users and comment on each other's posts.
+
+![alt-text](https://github.com/nehirakdag/CourseHelper/blob/master/Images/profiles.png)
+
+
